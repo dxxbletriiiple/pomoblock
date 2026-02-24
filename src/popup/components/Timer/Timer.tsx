@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Settings, TimerState } from '../../../shared/types';
+import { PauseIcon, PlayIcon, ResetIcon, SkipIcon } from '../Icons';
 import styles from './Timer.module.css';
 import { TimerProps } from './types';
 
@@ -221,47 +222,5 @@ export function Timer({
 				)}
 			</div>
 		</div>
-	);
-}
-
-function PlayIcon() {
-	return (
-		<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-			<path d="M8 5v14l11-7z" />
-		</svg>
-	);
-}
-
-function PauseIcon() {
-	return (
-		<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-			<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-		</svg>
-	);
-}
-
-function SkipIcon() {
-	return (
-		<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-			<path d="M6 18l8.5-6L6 6v12zm2.5-6L12 9.5v5L8.5 12zm7.5 6h2V6h-2v12z" />
-		</svg>
-	);
-}
-
-function ResetIcon() {
-	return (
-		<svg
-			width="13"
-			height="13"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			strokeWidth="2.5"
-			strokeLinecap="round"
-			strokeLinejoin="round"
-		>
-			<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-			<path d="M3 3v5h5" />
-		</svg>
 	);
 }

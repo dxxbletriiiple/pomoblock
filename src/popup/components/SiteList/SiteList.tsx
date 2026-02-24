@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import styles from './SiteList.module.css';
+import { CloseIcon, PlusIcon, SearchIcon } from '../Icons';
 
 interface Props {
   sites: string[];
@@ -76,10 +77,7 @@ export function SiteList({ sites, isBlocking, onChange }: Props) {
       {/* Add input */}
       <div className={styles.addSection}>
         <div className={`${styles.inputWrapper} ${error ? styles.inputError : ''}`}>
-          <svg className={styles.inputIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="11" cy="11" r="8" />
-            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-          </svg>
+          <SearchIcon className={styles.inputIcon} />
           <input
             ref={inputRef}
             className={styles.input}
@@ -95,18 +93,12 @@ export function SiteList({ sites, isBlocking, onChange }: Props) {
               className={styles.clearBtn}
               onClick={() => { setInputValue(''); setError(''); inputRef.current?.focus(); }}
             >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
+              <CloseIcon />
             </button>
           )}
         </div>
         <button className={styles.addBtn} onClick={handleAdd} disabled={!inputValue.trim()}>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-            <line x1="12" y1="5" x2="12" y2="19" />
-            <line x1="5" y1="12" x2="19" y2="12" />
-          </svg>
+          <PlusIcon />
           Add
         </button>
       </div>
@@ -153,10 +145,7 @@ export function SiteList({ sites, isBlocking, onChange }: Props) {
                     onClick={() => handleRemove(site)}
                     title={`Remove ${site}`}
                   >
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                      <line x1="18" y1="6" x2="6" y2="18" />
-                      <line x1="6" y1="6" x2="18" y2="18" />
-                    </svg>
+                    <CloseIcon />
                   </button>
                 </li>
               ))}
