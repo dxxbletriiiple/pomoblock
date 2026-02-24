@@ -10,7 +10,7 @@ type Tab = 'timer' | 'sites' | 'settings';
 export default function App() {
 	const [state, setState] = useState<AppState>(DEFAULT_STATE);
 	const [activeTab, setActiveTab] = useState<Tab>('timer');
-	const [loading, setLoading] = useState(true);
+	const [loading] = useState(true);
 
 	// Load state from background on mount
 	useEffect(() => {
