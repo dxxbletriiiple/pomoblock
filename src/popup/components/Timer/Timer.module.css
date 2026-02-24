@@ -1,0 +1,188 @@
+.container {
+  padding: 24px 20px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* ─── Phase label ─────────────────────────────────────────────────────────────── */
+
+.phaseLabel {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  transition: color 0.3s ease;
+}
+
+/* ─── Timer ring ──────────────────────────────────────────────────────────────── */
+
+.timerRing {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+
+.svg {
+  width: 200px;
+  height: 200px;
+}
+
+.svgRunning {
+  animation: gentle-pulse 3s ease-in-out infinite;
+}
+
+@keyframes gentle-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.01); }
+}
+
+.progressArc {
+  will-change: stroke-dashoffset;
+}
+
+.timerCenter {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.timeDisplay {
+  font-size: 38px;
+  font-weight: 700;
+  letter-spacing: -1.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+  line-height: 1;
+}
+
+.runningDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  animation: blink 1.2s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+.pausedText {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-secondary);
+}
+
+/* ─── Cycle dots ──────────────────────────────────────────────────────────────── */
+
+.cycleRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.cycleDots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.dotDone {
+  transform: scale(1);
+}
+
+.dotActive {
+  transform: scale(1.15);
+}
+
+.cycleText {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* ─── Controls ────────────────────────────────────────────────────────────────── */
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.primaryBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 220px;
+  padding: 13px 24px;
+  border-radius: 14px;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  border: none;
+  transition: opacity 0.15s, transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+}
+
+.primaryBtn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.primaryBtn:active {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.secondaryBtns {
+  display: flex;
+  gap: 10px;
+}
+
+.secondaryBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  border-radius: 10px;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 0.15s, color 0.15s, transform 0.1s;
+}
+
+.secondaryBtn:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+.secondaryBtn:active {
+  transform: translateY(0);
+}

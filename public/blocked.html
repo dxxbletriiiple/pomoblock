@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Site Blocked — PomoBlock</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #0d0d14;
+      --surface: #1a1a24;
+      --border: #2a2a38;
+      --text: #f0f0f5;
+      --text-muted: #9ca3af;
+      --primary: #ef4444;
+      --primary-glow: rgba(239, 68, 68, 0.2);
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f7f7f8;
+        --surface: #ffffff;
+        --border: #e5e7eb;
+        --text: #111827;
+        --text-muted: #6b7280;
+        --primary: #ef4444;
+        --primary-glow: rgba(239, 68, 68, 0.1);
+      }
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 48px 40px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+
+    .icon-wrapper {
+      width: 80px;
+      height: 80px;
+      background: var(--primary-glow);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+
+    .icon-wrapper svg {
+      width: 40px;
+      height: 40px;
+      color: var(--primary);
+    }
+
+    .tomato {
+      font-size: 48px;
+      display: block;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      line-height: 1.5;
+    }
+
+    .timer-display {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 32px;
+      margin-bottom: 24px;
+    }
+
+    .timer-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .timer-value {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--primary);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -1px;
+    }
+
+    .phase-badge {
+      display: inline-block;
+      background: var(--primary-glow);
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-top: 8px;
+    }
+
+    .message {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      text-decoration: none;
+    }
+
+    .back-btn:hover {
+      opacity: 0.85;
+    }
+
+    .branding {
+      margin-top: 32px;
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <span class="tomato">🍅</span>
+    <h1>Stay Focused!</h1>
+    <p class="subtitle">This site is blocked during your Pomodoro session.</p>
+
+    <div class="timer-display">
+      <div class="timer-label">Time Remaining</div>
+      <div class="timer-value" id="timer">--:--</div>
+      <div class="phase-badge" id="phase">Focus Session</div>
+    </div>
+
+    <p class="message">
+      Stay on track and finish your session strong.<br />
+      You can access this site during your break.
+    </p>
+
+    <button class="back-btn" onclick="history.back()">
+      ← Go Back
+    </button>
+
+    <div class="branding">
+      <span>🍅</span>
+      <span>PomoBlock</span>
+    </div>
+  </div>
+
+  <script>
+    function formatTime(ms) {
+      const totalSec = Math.max(0, Math.ceil(ms / 1000));
+      const m = Math.floor(totalSec / 60);
+      const s = totalSec % 60;
+      return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+
+    function updateTimer() {
+      chrome.storage.local.get('appState', (data) => {
+        const state = data.appState;
+        if (!state || !state.timer) return;
+
+        const { timer } = state;
+        const timerEl = document.getElementById('timer');
+        const phaseEl = document.getElementById('phase');
+
+        if (timer.status === 'running' && timer.endTime) {
+          const remaining = Math.max(0, timer.endTime - Date.now());
+          timerEl.textContent = formatTime(remaining);
+        } else if (timer.status === 'paused' && timer.remainingMs != null) {
+          timerEl.textContent = formatTime(timer.remainingMs);
+        }
+
+        const labels = { work: 'Focus Session', shortBreak: 'Short Break', longBreak: 'Long Break' };
+        phaseEl.textContent = labels[timer.phase] || 'Focus Session';
+      });
+    }
+
+    updateTimer();
+    setInterval(updateTimer, 500);
+  </script>
+</body>
+</html>
