@@ -3,6 +3,10 @@
 	"version": "1.0.0",
 	"private": true,
 	"author": "dxxbletriiiple <dxxbletriiiple@gmail.com>",
+	"contributes": {
+		"name": "claude code",
+		"url": "https://claude.ai/"
+	},
 	"scripts": {
 		"dev": "vite build --watch",
 		"build": "vite build",
