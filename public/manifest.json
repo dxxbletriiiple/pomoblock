@@ -1,27 +1,27 @@
 {
-  "manifest_version": 3,
-  "name": "PomoBlock",
-  "version": "1.0.0",
-  "description": "Block distracting websites during your Pomodoro focus sessions",
-  "action": {
-    "default_popup": "index.html",
-    "default_title": "PomoBlock"
-  },
-  "background": {
-    "service_worker": "background.js",
-    "type": "module"
-  },
-  "permissions": [
-    "storage",
-    "alarms",
-    "declarativeNetRequest",
-    "declarativeNetRequestWithHostAccess"
-  ],
-  "host_permissions": ["<all_urls>"],
-  "web_accessible_resources": [
-    {
-      "resources": ["blocked.html"],
-      "matches": ["<all_urls>"]
-    }
-  ]
+	"manifest_version": 3,
+	"name": "PomoBlock",
+	"version": "1.0.0",
+	"description": "Block distracting websites during your Pomodoro focus sessions",
+	"action": {
+		"default_popup": "index.html",
+		"default_title": "PomoBlock"
+	},
+	"background": {
+		"service_worker": "background.js",
+		"type": "module"
+	},
+	"permissions": [
+		"storage",
+		"alarms",
+		"declarativeNetRequest",
+		"declarativeNetRequestWithHostAccess"
+	],
+	"host_permissions": ["<all_urls>"],
+	"web_accessible_resources": [
+		{
+			"resources": ["blocked.html"],
+			"matches": ["<all_urls>"]
+		}
+	]
 }
