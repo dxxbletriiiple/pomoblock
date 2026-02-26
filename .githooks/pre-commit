@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eu
+
+if [ "${SKIP_TESTS:-}" = "1" ] || [ "${SKIP_TESTS:-}" = "true" ]; then
+	echo "pre-commit: skipping tests (SKIP_TESTS=${SKIP_TESTS})"
+	exit 0
+fi
+
+echo "pre-commit: running tests..."
+npm test
