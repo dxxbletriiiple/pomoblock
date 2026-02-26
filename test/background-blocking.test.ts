@@ -10,7 +10,18 @@ const updateDynamicRules = vi.fn<
 >();
 
 function installChromeDnrMock() {
-	(globalThis as unknown as { chrome: chrome }).chrome = {
+	(
+		globalThis as typeof globalThis & {
+			chrome?: {
+				declarativeNetRequest: {
+					getDynamicRules: typeof getDynamicRules;
+					updateDynamicRules: typeof updateDynamicRules;
+					RuleActionType: { REDIRECT: string };
+					ResourceType: { MAIN_FRAME: string };
+				};
+			};
+		}
+	).chrome = {
 		declarativeNetRequest: {
 			getDynamicRules,
 			updateDynamicRules,
@@ -21,7 +32,7 @@ function installChromeDnrMock() {
 				MAIN_FRAME: 'main_frame',
 			},
 		},
-	} as unknown as typeof chrome;
+	};
 }
 
 describe('normalizeDomain', () => {

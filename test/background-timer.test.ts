@@ -14,12 +14,21 @@ const clearAlarm = vi.fn<(name: string) => Promise<void>>();
 const createAlarm = vi.fn<(name: string, info: { when: number }) => Promise<void>>();
 
 function installChromeAlarmsMock() {
-	(globalThis as unknown as { chrome: chrome }).chrome = {
+	(
+		globalThis as typeof globalThis & {
+			chrome?: {
+				alarms: {
+					clear: typeof clearAlarm;
+					create: typeof createAlarm;
+				};
+			};
+		}
+	).chrome = {
 		alarms: {
 			clear: clearAlarm,
 			create: createAlarm,
 		},
-	} as unknown as typeof chrome;
+	};
 }
 
 function createState(
