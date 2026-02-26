@@ -1,5 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
-import { AppMessage, AppState, DEFAULT_STATE, Settings } from '../shared/types';
+import {
+	APP_STATE_STORAGE_KEY,
+	DEFAULT_STATE,
+} from '../shared/constants/constants';
+import { AppMessage, AppState, Settings } from '../shared/types/types';
 import styles from './App.module.css';
 import { MoonIcon, SunIcon } from './components/Icons';
 import { SettingsPanel } from './components/SettingsPanel/SettingsPanel';
@@ -20,8 +24,10 @@ export default function App() {
 			(response) => {
 				if (chrome.runtime.lastError) {
 					// Background may not be ready yet — read storage directly
-					chrome.storage.local.get('appState', (data) => {
-						if (data.appState) setState(data.appState);
+					chrome.storage.local.get(APP_STATE_STORAGE_KEY, (data) => {
+						if (data[APP_STATE_STORAGE_KEY]) {
+							setState(data[APP_STATE_STORAGE_KEY] as AppState);
+						}
 						setLoading(false);
 					});
 					return;
@@ -38,8 +44,8 @@ export default function App() {
 		const listener = (changes: {
 			[key: string]: chrome.storage.StorageChange;
 		}) => {
-			if (changes.appState?.newValue) {
-				setState(changes.appState.newValue as AppState);
+			if (changes[APP_STATE_STORAGE_KEY]?.newValue) {
+				setState(changes[APP_STATE_STORAGE_KEY].newValue as AppState);
 			}
 		};
 		chrome.storage.onChanged.addListener(listener);

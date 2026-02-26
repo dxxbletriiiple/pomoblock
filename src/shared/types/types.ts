@@ -23,28 +23,6 @@ export interface AppState {
   timer: TimerState;
 }
 
-export const DEFAULT_SETTINGS: Settings = {
-  workTime: 25,
-  shortBreak: 5,
-  longBreak: 15,
-  cycles: 4,
-  theme: 'light',
-};
-
-export const DEFAULT_TIMER: TimerState = {
-  status: 'idle',
-  phase: 'work',
-  completedSessions: 0,
-  endTime: null,
-  remainingMs: null,
-};
-
-export const DEFAULT_STATE: AppState = {
-  settings: DEFAULT_SETTINGS,
-  blockedSites: [],
-  timer: DEFAULT_TIMER,
-};
-
 export type AppMessage =
   | { type: 'GET_STATE' }
   | { type: 'START' }

@@ -1,16 +1,19 @@
 import { useEffect, useState } from 'react';
-import { Settings, TimerState } from '../../../shared/types';
+import {
+	MS_PER_MINUTE,
+	TIMER_RING_CIRCUMFERENCE,
+	TIMER_RING_RADIUS,
+	TIMER_TICK_INTERVAL_MS,
+} from '../../../shared/constants/constants';
+import { Settings, TimerState } from '../../../shared/types/types';
 import { PauseIcon, PlayIcon, ResetIcon, SkipIcon } from '../Icons';
 import styles from './Timer.module.css';
 import { TimerProps } from './types';
 
-const RADIUS = 76;
-const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
-
 function phaseDurationMs(phase: TimerState['phase'], s: Settings): number {
-	if (phase === 'work') return s.workTime * 60_000;
-	if (phase === 'shortBreak') return s.shortBreak * 60_000;
-	return s.longBreak * 60_000;
+	if (phase === 'work') return s.workTime * MS_PER_MINUTE;
+	if (phase === 'shortBreak') return s.shortBreak * MS_PER_MINUTE;
+	return s.longBreak * MS_PER_MINUTE;
 }
 
 function formatTime(ms: number): string {
@@ -56,14 +59,14 @@ export function Timer({
 
 		compute();
 		if (timer.status !== 'running') return;
-		const id = setInterval(compute, 250);
+		const id = setInterval(compute, TIMER_TICK_INTERVAL_MS);
 		return () => clearInterval(id);
 	}, [timer, settings]);
 
 	const total = phaseDurationMs(timer.phase, settings);
 	const progress =
 		total > 0 ? Math.max(0, Math.min(1, displayMs / total)) : 1;
-	const dashOffset = CIRCUMFERENCE * (1 - progress);
+	const dashOffset = TIMER_RING_CIRCUMFERENCE * (1 - progress);
 	const color = phaseColorVar(timer.phase);
 	const isRunning = timer.status === 'running';
 	const isPaused = timer.status === 'paused';
@@ -86,7 +89,7 @@ export function Timer({
 					<circle
 						cx="100"
 						cy="100"
-						r={RADIUS}
+						r={TIMER_RING_RADIUS}
 						fill="none"
 						stroke="var(--border)"
 						strokeWidth="8"
@@ -95,12 +98,12 @@ export function Timer({
 					<circle
 						cx="100"
 						cy="100"
-						r={RADIUS}
+						r={TIMER_RING_RADIUS}
 						fill="none"
 						stroke={color}
 						strokeWidth="8"
 						strokeLinecap="round"
-						strokeDasharray={CIRCUMFERENCE}
+						strokeDasharray={TIMER_RING_CIRCUMFERENCE}
 						strokeDashoffset={dashOffset}
 						className={styles.progressArc}
 						style={{

@@ -1,4 +1,4 @@
-import { Settings, TimerState } from '../../../shared/types';
+import { Settings, TimerState } from '../../../shared/types/types';
 
 export interface TimerProps {
 	timer: TimerState;
