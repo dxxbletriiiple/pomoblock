@@ -27,23 +27,38 @@ A Chrome extension that blocks distracting websites during your Pomodoro focus s
 ```
 pomoblock/
 ├── public/
-│   ├── manifest.json        # Chrome extension manifest (MV3)
 │   └── blocked.html         # Page shown when a site is blocked
 ├── src/
+│   ├── app/
+│   │   ├── App.tsx          # App wrapper (renders popup page)
+│   │   └── index.ts
 │   ├── background/
-│   │   └── index.ts         # Service worker — timer logic, blocking rules, message handler
-│   ├── popup/
-│   │   ├── main.tsx         # React entry point
-│   │   ├── App.tsx          # Root component
-│   │   ├── App.module.css
-│   │   ├── globals.css
-│   │   ├── types.ts
-│   │   └── components/
-│   │       ├── Timer/       # Countdown display + controls
-│   │       ├── SiteList/    # Add / remove blocked domains
-│   │       └── SettingsPanel/ # Work time, breaks, cycles, theme
-│   └── shared/
-│       └── types.ts         # Shared TypeScript types and default state
+│   │   ├── index.ts         # Service worker — storage + message handler
+│   │   ├── timer.ts         # Pomodoro phase logic
+│   │   └── blocking.ts      # Site blocking logic
+│   ├── content/
+│   │   └── blockContent.ts  # Overlay helper (content script placeholder)
+│   ├── pages/
+│   │   └── popup/
+│   │       ├── Popup.tsx    # Popup page component
+│   │       ├── index.tsx    # React entry point
+│   │       ├── Popup.module.css
+│   │       ├── globals.css
+│   │       └── components/
+│   │           ├── Timer/       # Countdown display + controls
+│   │           ├── SiteList/    # Add / remove blocked domains
+│   │           ├── SettingsPanel/ # Work time, breaks, cycles, theme
+│   │           ├── Tabs/
+│   │           └── Icons/
+│   ├── shared/
+│   │   ├── constants/       # Timer/storage/url constants + defaults
+│   │   ├── types/
+│   │   │   └── index.ts     # Shared TypeScript types
+│   │   └── utils/
+│   │       ├── index.ts
+│   │       └── time.ts      # Time helpers
+│   ├── manifest.json        # Chrome extension manifest (MV3)
+│   └── main.ts              # Root exports barrel
 ├── index.html               # Popup HTML entry point
 ├── vite.config.ts
 ├── tsconfig.json
