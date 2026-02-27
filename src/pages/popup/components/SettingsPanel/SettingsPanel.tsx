@@ -71,6 +71,12 @@ function SelectField({
 export function SettingsPanel({ settings, timerStatus, onChange }: Props) {
 	const isActive = timerStatus !== 'idle';
 	const intl = getIntl(settings.language);
+	const totalMinutes =
+		settings.workTime * settings.cycles +
+		settings.shortBreak * (settings.cycles - 1) +
+		settings.longBreak;
+	const totalHours = Math.floor(totalMinutes / 60);
+	const totalMinutesRemainder = totalMinutes % 60;
 
 	return (
 		<div className={styles.container}>
@@ -212,9 +218,9 @@ export function SettingsPanel({ settings, timerStatus, onChange }: Props) {
 					<span className={styles.summarySep}>=</span>
 					<div className={styles.summaryItem}>
 						<span className={styles.summaryValue}>
-							{settings.workTime * settings.cycles +
-								settings.shortBreak * (settings.cycles - 1) +
-								settings.longBreak}
+							{totalMinutes}
+							{intl.common.minuteShort} = {totalHours}
+							{intl.common.hourShort} {totalMinutesRemainder}
 							{intl.common.minuteShort}
 						</span>
 						<span className={styles.summaryLabel}>

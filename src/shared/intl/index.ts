@@ -64,6 +64,7 @@ interface IntlDictionary {
 		summaryTotal: string;
 	};
 	common: {
+		hourShort: string;
 		minuteShort: string;
 	};
 }
@@ -130,6 +131,7 @@ const DICTIONARIES: Record<AppLanguage, IntlDictionary> = {
 			summaryTotal: 'total',
 		},
 		common: {
+			hourShort: 'h',
 			minuteShort: 'm',
 		},
 	},
@@ -195,6 +197,7 @@ const DICTIONARIES: Record<AppLanguage, IntlDictionary> = {
 			summaryTotal: 'итого',
 		},
 		common: {
+			hourShort: 'ч',
 			minuteShort: 'м',
 		},
 	},
@@ -261,6 +264,7 @@ const DICTIONARIES: Record<AppLanguage, IntlDictionary> = {
 			summaryTotal: 'total',
 		},
 		common: {
+			hourShort: 'h',
 			minuteShort: 'm',
 		},
 	},
