@@ -10,6 +10,7 @@
 	"scripts": {
 		"dev": "vite build --watch",
 		"build": "vite build",
+		"build:prod": "vite build --mode prod",
 		"preview": "vite preview",
 		"test": "vitest run --environment jsdom"
 	},

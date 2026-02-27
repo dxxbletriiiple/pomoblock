@@ -16,24 +16,28 @@ function copyManifestPlugin() {
 	};
 }
 
-export default defineConfig({
-	plugins: [react(), copyManifestPlugin()],
-	base: './',
-	build: {
-		rollupOptions: {
-			input: {
-				popup: resolve(__dirname, 'index.html'),
-				blocked: resolve(__dirname, 'blocked.html'),
-				background: resolve(__dirname, 'src/background/index.ts'),
+export default defineConfig(({ mode }) => {
+	const withSourceMaps = mode !== 'prod';
+
+	return {
+		plugins: [react(), copyManifestPlugin()],
+		base: './',
+		build: {
+			rollupOptions: {
+				input: {
+					popup: resolve(__dirname, 'index.html'),
+					blocked: resolve(__dirname, 'blocked.html'),
+					background: resolve(__dirname, 'src/background/index.ts'),
+				},
+				output: {
+					entryFileNames: '[name].js',
+					chunkFileNames: 'assets/[name]-[hash].js',
+					assetFileNames: 'assets/[name]-[hash].[ext]',
+				},
 			},
-			output: {
-				entryFileNames: '[name].js',
-				chunkFileNames: 'assets/[name]-[hash].js',
-				assetFileNames: 'assets/[name]-[hash].[ext]',
-			},
+			outDir: 'dist',
+			emptyOutDir: true,
+			sourcemap: withSourceMaps,
 		},
-		outDir: 'dist',
-		emptyOutDir: true,
-		sourcemap: true,
-	},
+	};
 });
