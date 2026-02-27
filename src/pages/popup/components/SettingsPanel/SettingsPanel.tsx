@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+	BUG_REPORT_URL,
 	CYCLES,
 	LONG_BREAKS,
 	SHORT_BREAKS,
@@ -228,6 +229,17 @@ export function SettingsPanel({ settings, timerStatus, onChange }: Props) {
 						</span>
 					</div>
 				</div>
+			</div>
+
+			<div className={styles.footer}>
+				<a
+					className={styles.reportLink}
+					href={BUG_REPORT_URL}
+					target="_blank"
+					rel="noreferrer"
+				>
+					{intl.settings.reportBug}
+				</a>
 			</div>
 		</div>
 	);

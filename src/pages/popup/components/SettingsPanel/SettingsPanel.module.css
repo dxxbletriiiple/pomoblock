@@ -232,3 +232,24 @@
   font-weight: 500;
   align-self: center;
 }
+
+.footer {
+  margin-top: 2px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.reportLink {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+  padding: 6px 2px;
+  border-radius: 6px;
+  transition: opacity 0.15s ease;
+}
+
+.reportLink:hover {
+  opacity: 0.75;
+  text-decoration: underline;
+}

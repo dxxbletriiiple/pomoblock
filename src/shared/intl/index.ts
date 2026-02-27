@@ -70,6 +70,7 @@ interface IntlDictionary {
 		previewLong: string;
 		summaryLongBreak: string;
 		summaryTotal: string;
+		reportBug: string;
 	};
 	common: {
 		hourShort: string;
@@ -145,6 +146,7 @@ const DICTIONARIES: Record<AppLanguage, IntlDictionary> = {
 			previewLong: 'Long',
 			summaryLongBreak: 'long break',
 			summaryTotal: 'total',
+			reportBug: 'Report a bug',
 		},
 		common: {
 			hourShort: 'h',
@@ -219,6 +221,7 @@ const DICTIONARIES: Record<AppLanguage, IntlDictionary> = {
 			previewLong: 'Длинн.',
 			summaryLongBreak: 'длинный перерыв',
 			summaryTotal: 'итого',
+			reportBug: 'Сообщить об ошибке',
 		},
 		common: {
 			hourShort: 'ч',
@@ -294,6 +297,7 @@ const DICTIONARIES: Record<AppLanguage, IntlDictionary> = {
 			previewLong: 'Largo',
 			summaryLongBreak: 'descanso largo',
 			summaryTotal: 'total',
+			reportBug: 'Reportar un error',
 		},
 		common: {
 			hourShort: 'h',
