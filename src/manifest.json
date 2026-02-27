@@ -5,7 +5,19 @@
 	"description": "Block distracting websites during your Pomodoro focus sessions",
 	"action": {
 		"default_popup": "index.html",
-		"default_title": "PomoBlock"
+		"default_title": "PomoBlock",
+		"default_icon": {
+			"16": "icons/tomato-16.png",
+			"19": "icons/tomato-19.png",
+			"32": "icons/tomato-32.png",
+			"38": "icons/tomato-38.png"
+		}
+	},
+	"icons": {
+		"16": "icons/tomato-16.png",
+		"32": "icons/tomato-32.png",
+		"48": "icons/tomato-48.png",
+		"128": "icons/tomato-128.png"
 	},
 	"background": {
 		"service_worker": "background.js",
