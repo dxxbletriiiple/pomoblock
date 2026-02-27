@@ -1,9 +1,12 @@
 import React, { useState, useRef } from 'react';
+import { getIntl } from '../../../../shared/intl';
+import { AppLanguage } from '../../../../shared/types';
 import styles from './SiteList.module.css';
 import { CloseIcon, PlusIcon, SearchIcon } from '../Icons';
 
 interface Props {
   sites: string[];
+  language: AppLanguage;
   isBlocking: boolean;
   onChange: (sites: string[]) => void;
 }
@@ -22,22 +25,23 @@ function isValidDomain(domain: string): boolean {
   return /^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?(\.[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)+$/.test(domain);
 }
 
-export function SiteList({ sites, isBlocking, onChange }: Props) {
+export function SiteList({ sites, language, isBlocking, onChange }: Props) {
   const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
+  const intl = getIntl(language);
 
   const handleAdd = () => {
     const domain = normalizeDomain(inputValue);
     if (!domain) return;
 
     if (!isValidDomain(domain)) {
-      setError('Enter a valid domain like youtube.com');
+      setError(intl.siteList.errorInvalidDomain);
       return;
     }
 
     if (sites.includes(domain)) {
-      setError('Already in your block list');
+      setError(intl.siteList.errorDuplicateDomain);
       return;
     }
 
@@ -70,7 +74,7 @@ export function SiteList({ sites, isBlocking, onChange }: Props) {
       {isBlocking && (
         <div className={styles.activeBanner}>
           <span className={styles.activeDot} />
-          Blocking active — sites are currently blocked
+          {intl.siteList.activeBanner}
         </div>
       )}
 
@@ -82,7 +86,7 @@ export function SiteList({ sites, isBlocking, onChange }: Props) {
             ref={inputRef}
             className={styles.input}
             type="text"
-            placeholder="youtube.com, twitter.com…"
+            placeholder={intl.siteList.placeholder}
             value={inputValue}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
@@ -99,7 +103,7 @@ export function SiteList({ sites, isBlocking, onChange }: Props) {
         </div>
         <button className={styles.addBtn} onClick={handleAdd} disabled={!inputValue.trim()}>
           <PlusIcon />
-          Add
+          {intl.siteList.add}
         </button>
       </div>
 
@@ -110,19 +114,19 @@ export function SiteList({ sites, isBlocking, onChange }: Props) {
         {sites.length === 0 ? (
           <div className={styles.empty}>
             <div className={styles.emptyIcon}>🛡️</div>
-            <p className={styles.emptyTitle}>No sites blocked yet</p>
-            <p className={styles.emptySubtitle}>Add websites you want to avoid during focus sessions</p>
+            <p className={styles.emptyTitle}>{intl.siteList.emptyTitle}</p>
+            <p className={styles.emptySubtitle}>{intl.siteList.emptySubtitle}</p>
           </div>
         ) : (
           <>
             <div className={styles.listHeader}>
-              <span className={styles.listCount}>{sites.length} site{sites.length !== 1 ? 's' : ''}</span>
+              <span className={styles.listCount}>{intl.siteCount(sites.length)}</span>
               {sites.length > 1 && (
                 <button
                   className={styles.clearAllBtn}
                   onClick={() => onChange([])}
                 >
-                  Clear all
+                  {intl.siteList.clearAll}
                 </button>
               )}
             </div>
@@ -139,11 +143,11 @@ export function SiteList({ sites, isBlocking, onChange }: Props) {
                     />
                   </div>
                   <span className={styles.siteName}>{site}</span>
-                  {isBlocking && <span className={styles.blockedBadge}>blocked</span>}
+                  {isBlocking && <span className={styles.blockedBadge}>{intl.siteList.blockedBadge}</span>}
                   <button
                     className={styles.removeBtn}
                     onClick={() => handleRemove(site)}
-                    title={`Remove ${site}`}
+                    title={intl.removeSiteTitle(site)}
                   >
                     <CloseIcon />
                   </button>

@@ -19,6 +19,7 @@ export const DEFAULT_SETTINGS: Settings = {
 	longBreak: 15,
 	cycles: 4,
 	theme: 'light',
+	language: 'en',
 };
 
 export const DEFAULT_TIMER: TimerState = {

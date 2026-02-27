@@ -3,9 +3,10 @@ import {
 	APP_STATE_STORAGE_KEY,
 	DEFAULT_STATE,
 } from '../../shared/constants';
-import { AppMessage, AppState, Settings } from '../../shared/types';
+import { getIntl, SUPPORTED_LANGUAGES } from '../../shared/intl';
+import { AppLanguage, AppMessage, AppState, Settings } from '../../shared/types';
 import styles from './Popup.module.css';
-import { MoonIcon, SunIcon } from './components/Icons';
+import { LanguageIcon, MoonIcon, SunIcon } from './components/Icons';
 import { SettingsPanel } from './components/SettingsPanel/SettingsPanel';
 import { SiteList } from './components/SiteList/SiteList';
 import { Timer } from './components/Timer/Timer';
@@ -62,8 +63,13 @@ export default function Popup() {
 		const next = state.settings.theme === 'light' ? 'dark' : 'light';
 		send({ type: 'UPDATE_SETTINGS', settings: { theme: next } });
 	};
+	const handleLanguageChange = (language: AppLanguage) => {
+		send({ type: 'UPDATE_SETTINGS', settings: { language } });
+	};
 
 	const theme = state.settings.theme;
+	const language = state.settings.language;
+	const intl = getIntl(language);
 	const isWorking =
 		state.timer.status === 'running' && state.timer.phase === 'work';
 
@@ -77,16 +83,42 @@ export default function Popup() {
 					<span className={styles.logoIcon}>🍅</span>
 					<span className={styles.logoText}>PomoBlock</span>
 					{isWorking && (
-						<span className={styles.activePill}>FOCUS</span>
+						<span className={styles.activePill}>
+							{intl.header.focusPill}
+						</span>
 					)}
 				</div>
-				<button
-					className={styles.themeBtn}
-					onClick={handleThemeToggle}
-					title="Toggle theme"
-				>
-					{theme === 'dark' ? <SunIcon /> : <MoonIcon />}
-				</button>
+				<div className={styles.headerActions}>
+					<label
+						className={styles.languagePicker}
+						title={intl.header.languageSelectTitle}
+					>
+						<span className={styles.languageIcon}>
+							<LanguageIcon />
+						</span>
+						<select
+							className={styles.languageSelect}
+							value={language}
+							aria-label={intl.header.languageSelectTitle}
+							onChange={(e) =>
+								handleLanguageChange(e.target.value as AppLanguage)
+							}
+						>
+							{SUPPORTED_LANGUAGES.map((code) => (
+								<option key={code} value={code}>
+									{intl.languageName(code)}
+								</option>
+							))}
+						</select>
+					</label>
+					<button
+						className={styles.themeBtn}
+						onClick={handleThemeToggle}
+						title={intl.header.themeToggleTitle}
+					>
+						{theme === 'dark' ? <SunIcon /> : <MoonIcon />}
+					</button>
+				</div>
 			</header>
 
 			{/* Tabs */}
@@ -97,10 +129,10 @@ export default function Popup() {
 						className={`${styles.tab} ${activeTab === tab ? styles.tabActive : ''}`}
 						onClick={() => setActiveTab(tab)}
 					>
-						{tab === 'timer' && 'Timer'}
+						{tab === 'timer' && intl.tabs.timer}
 						{tab === 'sites' && (
 							<>
-								Sites
+								{intl.tabs.sites}
 								{state.blockedSites.length > 0 && (
 									<span className={styles.badge}>
 										{state.blockedSites.length}
@@ -108,7 +140,7 @@ export default function Popup() {
 								)}
 							</>
 						)}
-						{tab === 'settings' && 'Settings'}
+						{tab === 'settings' && intl.tabs.settings}
 					</button>
 				))}
 			</nav>
@@ -135,6 +167,7 @@ export default function Popup() {
 						{activeTab === 'sites' && (
 							<SiteList
 								sites={state.blockedSites}
+								language={language}
 								isBlocking={isWorking}
 								onChange={(sites) =>
 									send({ type: 'UPDATE_SITES', sites })

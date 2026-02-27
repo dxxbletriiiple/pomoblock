@@ -68,6 +68,12 @@
 		border-color 0.2s;
 }
 
+.headerActions {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
 .logo {
 	display: flex;
 	align-items: center;
@@ -122,6 +128,57 @@
 		background 0.15s,
 		color 0.15s,
 		transform 0.15s;
+}
+
+.languagePicker {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	height: 34px;
+	min-width: 118px;
+	padding: 0 8px 0 30px;
+	border-radius: 10px;
+	background: var(--surface-alt);
+	border: 1px solid var(--border);
+	color: var(--text-secondary);
+	transition:
+		background 0.15s,
+		border-color 0.15s;
+}
+
+.languagePicker:hover {
+	background: var(--surface-hover);
+}
+
+.languageIcon {
+	position: absolute;
+	left: 10px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--text-secondary);
+	pointer-events: none;
+}
+
+.languageIcon svg {
+	width: 14px;
+	height: 14px;
+}
+
+.languageSelect {
+	width: 100%;
+	border: none;
+	outline: none;
+	background: transparent;
+	color: var(--text);
+	font-size: 12px;
+	font-weight: 600;
+	cursor: pointer;
+	padding-right: 4px;
+}
+
+.languageSelect option {
+	color: #111827;
 }
 
 .themeBtn:hover {

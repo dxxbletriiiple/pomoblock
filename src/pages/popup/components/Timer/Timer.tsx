@@ -4,6 +4,7 @@ import {
 	TIMER_RING_RADIUS,
 	TIMER_TICK_INTERVAL_MS,
 } from '../../../../shared/constants';
+import { getIntl } from '../../../../shared/intl';
 import { Settings, TimerState } from '../../../../shared/types';
 import { formatTimerClock, minutesToMs } from '../../../../shared/utils';
 import { PauseIcon, PlayIcon, ResetIcon, SkipIcon } from '../Icons';
@@ -14,12 +15,6 @@ function phaseDurationMs(phase: TimerState['phase'], s: Settings): number {
 	if (phase === 'work') return minutesToMs(s.workTime);
 	if (phase === 'shortBreak') return minutesToMs(s.shortBreak);
 	return minutesToMs(s.longBreak);
-}
-
-function phaseLabel(phase: TimerState['phase']): string {
-	if (phase === 'work') return 'Focus Session';
-	if (phase === 'shortBreak') return 'Short Break';
-	return 'Long Break';
 }
 
 function phaseColorVar(phase: TimerState['phase']): string {
@@ -38,6 +33,7 @@ export function Timer({
 	onSkip,
 }: TimerProps) {
 	const [displayMs, setDisplayMs] = useState(0);
+	const intl = getIntl(settings.language);
 
 	useEffect(() => {
 		const compute = () => {
@@ -69,7 +65,7 @@ export function Timer({
 		<div className={styles.container}>
 			{/* Phase label */}
 			<div className={styles.phaseLabel} style={{ color }}>
-				{phaseLabel(timer.phase)}
+				{intl.timer.phases[timer.phase]}
 			</div>
 
 			{/* Timer ring */}
@@ -124,7 +120,9 @@ export function Timer({
 						/>
 					)}
 					{isPaused && (
-						<span className={styles.pausedText}>paused</span>
+						<span className={styles.pausedText}>
+							{intl.timer.paused}
+						</span>
 					)}
 				</div>
 			</div>
@@ -157,7 +155,10 @@ export function Timer({
 					})}
 				</div>
 				<span className={styles.cycleText}>
-					{timer.completedSessions}/{settings.cycles} sessions
+					{intl.sessionsProgress(
+						timer.completedSessions,
+						settings.cycles,
+					)}
 				</span>
 			</div>
 
@@ -170,7 +171,7 @@ export function Timer({
 						onClick={onStart}
 					>
 						<PlayIcon />
-						Start Focus
+						{intl.timer.startFocus}
 					</button>
 				)}
 
@@ -181,7 +182,7 @@ export function Timer({
 						onClick={onPause}
 					>
 						<PauseIcon />
-						Pause
+						{intl.timer.pause}
 					</button>
 				)}
 
@@ -192,7 +193,7 @@ export function Timer({
 						onClick={onResume}
 					>
 						<PlayIcon />
-						Resume
+						{intl.timer.resume}
 					</button>
 				)}
 
@@ -201,18 +202,18 @@ export function Timer({
 						<button
 							className={styles.secondaryBtn}
 							onClick={onSkip}
-							title="Skip to next phase"
+							title={intl.timer.skipTitle}
 						>
 							<SkipIcon />
-							Skip
+							{intl.timer.skip}
 						</button>
 						<button
 							className={styles.secondaryBtn}
 							onClick={onReset}
-							title="Reset timer"
+							title={intl.timer.resetTitle}
 						>
 							<ResetIcon />
-							Reset
+							{intl.timer.reset}
 						</button>
 					</div>
 				)}

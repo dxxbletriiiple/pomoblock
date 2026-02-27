@@ -1,9 +1,12 @@
+export type AppLanguage = 'en' | 'ru' | 'es';
+
 export interface Settings {
 	workTime: number; // 15|20|25|30|45|60|90
 	shortBreak: number; // 5|10
 	longBreak: number; // 15|20|30
 	cycles: number; // 2-6
 	theme: 'light' | 'dark';
+	language: AppLanguage;
 }
 
 export type TimerPhase = 'work' | 'shortBreak' | 'longBreak';

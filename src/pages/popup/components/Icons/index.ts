@@ -1,6 +1,7 @@
 export * from './CloseIcon';
 export * from './CycleIcon';
 export * from './LongBreakIcon';
+export * from './LanguageIcon';
 export * from './MoonIcon';
 export * from './PauseIcon';
 export * from './PlayIcon';

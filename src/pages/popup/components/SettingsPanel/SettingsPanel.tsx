@@ -5,6 +5,7 @@ import {
 	SHORT_BREAKS,
 	WORK_TIMES,
 } from '../../../../shared/constants';
+import { getIntl } from '../../../../shared/intl';
 import { Settings, TimerStatus } from '../../../../shared/types';
 import {
 	CycleIcon,
@@ -69,27 +70,27 @@ function SelectField({
 
 export function SettingsPanel({ settings, timerStatus, onChange }: Props) {
 	const isActive = timerStatus !== 'idle';
+	const intl = getIntl(settings.language);
 
 	return (
 		<div className={styles.container}>
 			{isActive && (
 				<div className={styles.warningBanner}>
 					<WarningIcon />
-					Settings are locked while timer is running. Reset to make
-					changes.
+					{intl.settings.lockedBanner}
 				</div>
 			)}
 
 			{/* Work time */}
 			<div className={styles.group}>
-				<h3 className={styles.groupTitle}>Focus Time</h3>
+				<h3 className={styles.groupTitle}>{intl.settings.focusGroup}</h3>
 				<SelectField
-					label="Work Duration"
-					description="Length of each focus session"
+					label={intl.settings.workDurationLabel}
+					description={intl.settings.workDurationDesc}
 					icon={<WorkIcon />}
 					value={settings.workTime}
 					options={WORK_TIMES}
-					unit="min"
+					unit={intl.settings.unitMin}
 					disabled={isActive}
 					color="var(--primary)"
 					onChange={(v) => onChange({ workTime: v })}
@@ -98,25 +99,25 @@ export function SettingsPanel({ settings, timerStatus, onChange }: Props) {
 
 			{/* Breaks */}
 			<div className={styles.group}>
-				<h3 className={styles.groupTitle}>Breaks</h3>
+				<h3 className={styles.groupTitle}>{intl.settings.breaksGroup}</h3>
 				<SelectField
-					label="Short Break"
-					description="Rest after each focus session"
+					label={intl.settings.shortBreakLabel}
+					description={intl.settings.shortBreakDesc}
 					icon={<ShortBreakIcon />}
 					value={settings.shortBreak}
 					options={SHORT_BREAKS}
-					unit="min"
+					unit={intl.settings.unitMin}
 					disabled={isActive}
 					color="var(--break)"
 					onChange={(v) => onChange({ shortBreak: v })}
 				/>
 				<SelectField
-					label="Long Break"
-					description="Rest after completing all cycles"
+					label={intl.settings.longBreakLabel}
+					description={intl.settings.longBreakDesc}
 					icon={<LongBreakIcon />}
 					value={settings.longBreak}
 					options={LONG_BREAKS}
-					unit="min"
+					unit={intl.settings.unitMin}
 					disabled={isActive}
 					color="var(--break-long)"
 					onChange={(v) => onChange({ longBreak: v })}
@@ -125,14 +126,14 @@ export function SettingsPanel({ settings, timerStatus, onChange }: Props) {
 
 			{/* Cycles */}
 			<div className={styles.group}>
-				<h3 className={styles.groupTitle}>Cycles</h3>
+				<h3 className={styles.groupTitle}>{intl.settings.cyclesGroup}</h3>
 				<SelectField
-					label="Sessions per Set"
-					description="Focus sessions before a long break"
+					label={intl.settings.sessionsPerSetLabel}
+					description={intl.settings.sessionsPerSetDesc}
 					icon={<CycleIcon />}
 					value={settings.cycles}
 					options={CYCLES}
-					unit="sessions"
+					unit={intl.settings.unitSessions}
 					disabled={isActive}
 					onChange={(v) => onChange({ cycles: v })}
 				/>
@@ -144,21 +145,21 @@ export function SettingsPanel({ settings, timerStatus, onChange }: Props) {
 							<div className={styles.previewWork}>
 								<span>🎯</span>
 								<span className={styles.previewLabel}>
-									Work
+									{intl.settings.previewWork}
 								</span>
 							</div>
 							{i < settings.cycles - 1 ? (
 								<div className={styles.previewBreak}>
 									<span>☕</span>
 									<span className={styles.previewLabel}>
-										Short
+										{intl.settings.previewShort}
 									</span>
 								</div>
 							) : (
 								<div className={styles.previewLongBreak}>
 									<span>🌿</span>
 									<span className={styles.previewLabel}>
-										Long
+										{intl.settings.previewLong}
 									</span>
 								</div>
 							)}
@@ -175,10 +176,11 @@ export function SettingsPanel({ settings, timerStatus, onChange }: Props) {
 							className={styles.summaryValue}
 							style={{ color: 'var(--primary)' }}
 						>
-							{settings.workTime}m
+							{settings.workTime}
+							{intl.common.minuteShort}
 						</span>
 						<span className={styles.summaryLabel}>
-							× {settings.cycles} focus
+							{intl.settingsFocusCount(settings.cycles)}
 						</span>
 					</div>
 					<span className={styles.summarySep}>+</span>
@@ -187,10 +189,11 @@ export function SettingsPanel({ settings, timerStatus, onChange }: Props) {
 							className={styles.summaryValue}
 							style={{ color: 'var(--break)' }}
 						>
-							{settings.shortBreak}m
+							{settings.shortBreak}
+							{intl.common.minuteShort}
 						</span>
 						<span className={styles.summaryLabel}>
-							× {settings.cycles - 1} short
+							{intl.settingsShortCount(settings.cycles - 1)}
 						</span>
 					</div>
 					<span className={styles.summarySep}>+</span>
@@ -199,9 +202,12 @@ export function SettingsPanel({ settings, timerStatus, onChange }: Props) {
 							className={styles.summaryValue}
 							style={{ color: 'var(--break-long)' }}
 						>
-							{settings.longBreak}m
+							{settings.longBreak}
+							{intl.common.minuteShort}
 						</span>
-						<span className={styles.summaryLabel}>long break</span>
+						<span className={styles.summaryLabel}>
+							{intl.settings.summaryLongBreak}
+						</span>
 					</div>
 					<span className={styles.summarySep}>=</span>
 					<div className={styles.summaryItem}>
@@ -209,9 +215,11 @@ export function SettingsPanel({ settings, timerStatus, onChange }: Props) {
 							{settings.workTime * settings.cycles +
 								settings.shortBreak * (settings.cycles - 1) +
 								settings.longBreak}
-							m
+							{intl.common.minuteShort}
 						</span>
-						<span className={styles.summaryLabel}>total</span>
+						<span className={styles.summaryLabel}>
+							{intl.settings.summaryTotal}
+						</span>
 					</div>
 				</div>
 			</div>
