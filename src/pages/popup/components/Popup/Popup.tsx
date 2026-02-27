@@ -1,19 +1,22 @@
 import { useCallback, useEffect, useState } from 'react';
 import {
 	APP_STATE_STORAGE_KEY,
+	AppLanguage,
+	AppMessage,
+	AppState,
 	DEFAULT_STATE,
-} from '../../shared/constants';
-import { getIntl, SUPPORTED_LANGUAGES } from '../../shared/intl';
-import { AppLanguage, AppMessage, AppState, Settings } from '../../shared/types';
+	getIntl,
+	Settings,
+	SUPPORTED_LANGUAGES,
+} from '../../../../shared';
+import { LanguageIcon, MoonIcon, SunIcon } from '../Icons';
+import { SettingsPanel } from '../SettingsPanel/SettingsPanel';
+import { SiteList } from '../SiteList';
+import { Timer } from '../Timer';
 import styles from './Popup.module.css';
-import { LanguageIcon, MoonIcon, SunIcon } from './components/Icons';
-import { SettingsPanel } from './components/SettingsPanel/SettingsPanel';
-import { SiteList } from './components/SiteList/SiteList';
-import { Timer } from './components/Timer/Timer';
+import { Tab } from './types';
 
-type Tab = 'timer' | 'sites' | 'settings';
-
-export default function Popup() {
+export const Popup = () => {
 	const [state, setState] = useState<AppState>(DEFAULT_STATE);
 	const [activeTab, setActiveTab] = useState<Tab>('timer');
 	const [loading, setLoading] = useState(true);
@@ -101,7 +104,9 @@ export default function Popup() {
 							value={language}
 							aria-label={intl.header.languageSelectTitle}
 							onChange={(e) =>
-								handleLanguageChange(e.target.value as AppLanguage)
+								handleLanguageChange(
+									e.target.value as AppLanguage,
+								)
 							}
 						>
 							{SUPPORTED_LANGUAGES.map((code) => (
@@ -191,4 +196,4 @@ export default function Popup() {
 			</main>
 		</div>
 	);
-}
+};

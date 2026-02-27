@@ -1,162 +1,179 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { getIntl } from '../../../../shared/intl';
-import { AppLanguage } from '../../../../shared/types';
-import styles from './SiteList.module.css';
+import {
+	isValidDomain,
+	normalizeDomain,
+} from '../../../../shared/utils/domain';
 import { CloseIcon, PlusIcon, SearchIcon } from '../Icons';
+import styles from './SiteList.module.css';
+import { SiteListProps } from './types';
 
-interface Props {
-  sites: string[];
-  language: AppLanguage;
-  isBlocking: boolean;
-  onChange: (sites: string[]) => void;
-}
+export function SiteList({
+	sites,
+	language,
+	isBlocking,
+	onChange,
+}: SiteListProps) {
+	const [inputValue, setInputValue] = useState('');
+	const [error, setError] = useState('');
+	const inputRef = useRef<HTMLInputElement>(null);
+	const intl = getIntl(language);
 
-function normalizeDomain(input: string): string {
-  return input
-    .toLowerCase()
-    .trim()
-    .replace(/^https?:\/\//, '')
-    .split('/')[0]
-    .split('?')[0]
-    .replace(/^www\./, '');
-}
+	const handleAdd = () => {
+		const domain = normalizeDomain(inputValue);
+		if (!domain) return;
 
-function isValidDomain(domain: string): boolean {
-  return /^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?(\.[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)+$/.test(domain);
-}
+		if (!isValidDomain(domain)) {
+			setError(intl.siteList.errorInvalidDomain);
+			return;
+		}
 
-export function SiteList({ sites, language, isBlocking, onChange }: Props) {
-  const [inputValue, setInputValue] = useState('');
-  const [error, setError] = useState('');
-  const inputRef = useRef<HTMLInputElement>(null);
-  const intl = getIntl(language);
+		if (sites.includes(domain)) {
+			setError(intl.siteList.errorDuplicateDomain);
+			return;
+		}
 
-  const handleAdd = () => {
-    const domain = normalizeDomain(inputValue);
-    if (!domain) return;
+		onChange([...sites, domain]);
+		setInputValue('');
+		setError('');
+		inputRef.current?.focus();
+	};
 
-    if (!isValidDomain(domain)) {
-      setError(intl.siteList.errorInvalidDomain);
-      return;
-    }
+	const handleRemove = (domain: string) => {
+		onChange(sites.filter((s) => s !== domain));
+	};
 
-    if (sites.includes(domain)) {
-      setError(intl.siteList.errorDuplicateDomain);
-      return;
-    }
+	const handleKeyDown = (e: React.KeyboardEvent) => {
+		if (e.key === 'Enter') handleAdd();
+		if (e.key === 'Escape') {
+			setInputValue('');
+			setError('');
+		}
+	};
 
-    onChange([...sites, domain]);
-    setInputValue('');
-    setError('');
-    inputRef.current?.focus();
-  };
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setInputValue(e.target.value);
+		if (error) setError('');
+	};
 
-  const handleRemove = (domain: string) => {
-    onChange(sites.filter((s) => s !== domain));
-  };
+	return (
+		<div className={styles.container}>
+			{/* Status banner when blocking is active */}
+			{isBlocking && (
+				<div className={styles.activeBanner}>
+					<span className={styles.activeDot} />
+					{intl.siteList.activeBanner}
+				</div>
+			)}
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') handleAdd();
-    if (e.key === 'Escape') {
-      setInputValue('');
-      setError('');
-    }
-  };
+			{/* Add input */}
+			<div className={styles.addSection}>
+				<div
+					className={`${styles.inputWrapper} ${error ? styles.inputError : ''}`}
+				>
+					<SearchIcon className={styles.inputIcon} />
+					<input
+						ref={inputRef}
+						className={styles.input}
+						type="text"
+						placeholder={intl.siteList.placeholder}
+						value={inputValue}
+						onChange={handleInputChange}
+						onKeyDown={handleKeyDown}
+						autoFocus
+					/>
+					{inputValue && (
+						<button
+							className={styles.clearBtn}
+							onClick={() => {
+								setInputValue('');
+								setError('');
+								inputRef.current?.focus();
+							}}
+						>
+							<CloseIcon />
+						</button>
+					)}
+				</div>
+				<button
+					className={styles.addBtn}
+					onClick={handleAdd}
+					disabled={!inputValue.trim()}
+				>
+					<PlusIcon />
+					{intl.siteList.add}
+				</button>
+			</div>
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-    if (error) setError('');
-  };
+			{error && <p className={styles.errorMsg}>{error}</p>}
 
-  return (
-    <div className={styles.container}>
-      {/* Status banner when blocking is active */}
-      {isBlocking && (
-        <div className={styles.activeBanner}>
-          <span className={styles.activeDot} />
-          {intl.siteList.activeBanner}
-        </div>
-      )}
-
-      {/* Add input */}
-      <div className={styles.addSection}>
-        <div className={`${styles.inputWrapper} ${error ? styles.inputError : ''}`}>
-          <SearchIcon className={styles.inputIcon} />
-          <input
-            ref={inputRef}
-            className={styles.input}
-            type="text"
-            placeholder={intl.siteList.placeholder}
-            value={inputValue}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-            autoFocus
-          />
-          {inputValue && (
-            <button
-              className={styles.clearBtn}
-              onClick={() => { setInputValue(''); setError(''); inputRef.current?.focus(); }}
-            >
-              <CloseIcon />
-            </button>
-          )}
-        </div>
-        <button className={styles.addBtn} onClick={handleAdd} disabled={!inputValue.trim()}>
-          <PlusIcon />
-          {intl.siteList.add}
-        </button>
-      </div>
-
-      {error && <p className={styles.errorMsg}>{error}</p>}
-
-      {/* Site list */}
-      <div className={styles.listSection}>
-        {sites.length === 0 ? (
-          <div className={styles.empty}>
-            <div className={styles.emptyIcon}>🛡️</div>
-            <p className={styles.emptyTitle}>{intl.siteList.emptyTitle}</p>
-            <p className={styles.emptySubtitle}>{intl.siteList.emptySubtitle}</p>
-          </div>
-        ) : (
-          <>
-            <div className={styles.listHeader}>
-              <span className={styles.listCount}>{intl.siteCount(sites.length)}</span>
-              {sites.length > 1 && (
-                <button
-                  className={styles.clearAllBtn}
-                  onClick={() => onChange([])}
-                >
-                  {intl.siteList.clearAll}
-                </button>
-              )}
-            </div>
-            <ul className={styles.list}>
-              {sites.map((site) => (
-                <li key={site} className={`${styles.siteItem} ${isBlocking ? styles.siteItemActive : ''}`}>
-                  <div className={styles.siteFavicon}>
-                    <img
-                      src={`https://www.google.com/s2/favicons?sz=32&domain_url=${site}`}
-                      alt=""
-                      width={16}
-                      height={16}
-                      onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
-                    />
-                  </div>
-                  <span className={styles.siteName}>{site}</span>
-                  {isBlocking && <span className={styles.blockedBadge}>{intl.siteList.blockedBadge}</span>}
-                  <button
-                    className={styles.removeBtn}
-                    onClick={() => handleRemove(site)}
-                    title={intl.removeSiteTitle(site)}
-                  >
-                    <CloseIcon />
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
-      </div>
-    </div>
-  );
+			{/* Site list */}
+			<div className={styles.listSection}>
+				{sites.length === 0 ? (
+					<div className={styles.empty}>
+						<div className={styles.emptyIcon}>🛡️</div>
+						<p className={styles.emptyTitle}>
+							{intl.siteList.emptyTitle}
+						</p>
+						<p className={styles.emptySubtitle}>
+							{intl.siteList.emptySubtitle}
+						</p>
+					</div>
+				) : (
+					<>
+						<div className={styles.listHeader}>
+							<span className={styles.listCount}>
+								{intl.siteCount(sites.length)}
+							</span>
+							{sites.length > 1 && (
+								<button
+									className={styles.clearAllBtn}
+									onClick={() => onChange([])}
+								>
+									{intl.siteList.clearAll}
+								</button>
+							)}
+						</div>
+						<ul className={styles.list}>
+							{sites.map((site) => (
+								<li
+									key={site}
+									className={`${styles.siteItem} ${isBlocking ? styles.siteItemActive : ''}`}
+								>
+									<div className={styles.siteFavicon}>
+										<img
+											src={`https://www.google.com/s2/favicons?sz=32&domain_url=${site}`}
+											alt=""
+											width={16}
+											height={16}
+											onError={(e) => {
+												(
+													e.target as HTMLImageElement
+												).style.display = 'none';
+											}}
+										/>
+									</div>
+									<span className={styles.siteName}>
+										{site}
+									</span>
+									{isBlocking && (
+										<span className={styles.blockedBadge}>
+											{intl.siteList.blockedBadge}
+										</span>
+									)}
+									<button
+										className={styles.removeBtn}
+										onClick={() => handleRemove(site)}
+										title={intl.removeSiteTitle(site)}
+									>
+										<CloseIcon />
+									</button>
+								</li>
+							))}
+						</ul>
+					</>
+				)}
+			</div>
+		</div>
+	);
 }

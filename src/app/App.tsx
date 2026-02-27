@@ -1,5 +1,5 @@
-import Popup from '../pages/popup/Popup';
+import { Popup } from '../pages/popup/components/Popup';
 
-export default function App() {
+export const App = () => {
 	return <Popup />;
-}
+};
