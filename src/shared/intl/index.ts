@@ -42,6 +42,14 @@ interface IntlDictionary {
 		clearAll: string;
 		blockedBadge: string;
 	};
+	blocked: {
+		title: string;
+		subtitle: string;
+		timerLabel: string;
+		messageLine1: string;
+		messageLine2: string;
+		backButton: string;
+	};
 	settings: {
 		lockedBanner: string;
 		focusGroup: string;
@@ -107,6 +115,14 @@ const DICTIONARIES: Record<AppLanguage, IntlDictionary> = {
 				'Add websites you want to avoid during focus sessions',
 			clearAll: 'Clear all',
 			blockedBadge: 'blocked',
+		},
+		blocked: {
+			title: 'Stay Focused!',
+			subtitle: 'This site is blocked during your Pomodoro session.',
+			timerLabel: 'Time Remaining',
+			messageLine1: 'Stay on track and finish your session strong.',
+			messageLine2: 'You can access this site during your break.',
+			backButton: '← Go Back',
 		},
 		settings: {
 			lockedBanner:
@@ -174,6 +190,14 @@ const DICTIONARIES: Record<AppLanguage, IntlDictionary> = {
 			clearAll: 'Очистить все',
 			blockedBadge: 'блок',
 		},
+		blocked: {
+			title: 'Сфокусируйтесь!',
+			subtitle: 'Этот сайт заблокирован во время вашей помодоро-сессии.',
+			timerLabel: 'Оставшееся время',
+			messageLine1: 'Держите фокус и завершите сессию уверенно.',
+			messageLine2: 'Вы сможете открыть этот сайт во время перерыва.',
+			backButton: '← Назад',
+		},
 		settings: {
 			lockedBanner:
 				'Настройки заблокированы во время работы таймера. Сбросьте таймер, чтобы изменить их.',
@@ -240,6 +264,14 @@ const DICTIONARIES: Record<AppLanguage, IntlDictionary> = {
 				'Agrega sitios web que quieras evitar durante el enfoque',
 			clearAll: 'Borrar todo',
 			blockedBadge: 'bloq.',
+		},
+		blocked: {
+			title: '¡Mantén el foco!',
+			subtitle: 'Este sitio está bloqueado durante tu sesión Pomodoro.',
+			timerLabel: 'Tiempo restante',
+			messageLine1: 'Mantente en camino y termina tu sesión con fuerza.',
+			messageLine2: 'Podrás acceder a este sitio durante tu descanso.',
+			backButton: '← Volver',
 		},
 		settings: {
 			lockedBanner:

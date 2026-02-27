@@ -23,6 +23,7 @@ export default defineConfig({
 		rollupOptions: {
 			input: {
 				popup: resolve(__dirname, 'index.html'),
+				blocked: resolve(__dirname, 'blocked.html'),
 				background: resolve(__dirname, 'src/background/index.ts'),
 			},
 			output: {

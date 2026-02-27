@@ -1,0 +1,137 @@
+.page {
+	--bg: #0d0d14;
+	--surface: #1a1a24;
+	--border: #2a2a38;
+	--text: #f0f0f5;
+	--text-muted: #9ca3af;
+	--primary: #ef4444;
+	--primary-glow: rgba(239, 68, 68, 0.2);
+	background: var(--bg);
+	color: var(--text);
+	font-family:
+		-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 24px;
+}
+
+@media (prefers-color-scheme: light) {
+	.page {
+		--bg: #f7f7f8;
+		--surface: #ffffff;
+		--border: #e5e7eb;
+		--text: #111827;
+		--text-muted: #6b7280;
+		--primary: #ef4444;
+		--primary-glow: rgba(239, 68, 68, 0.1);
+	}
+}
+
+.card {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: 24px;
+	padding: 48px 40px;
+	max-width: 480px;
+	width: 100%;
+	text-align: center;
+	box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.tomato {
+	font-size: 48px;
+	display: block;
+	margin-bottom: 24px;
+}
+
+h1 {
+	font-size: 28px;
+	font-weight: 700;
+	color: var(--text);
+	margin-bottom: 8px;
+	letter-spacing: -0.5px;
+}
+
+.subtitle {
+	font-size: 15px;
+	color: var(--text-muted);
+	margin-bottom: 32px;
+	line-height: 1.5;
+}
+
+.timerDisplay {
+	background: var(--bg);
+	border: 1px solid var(--border);
+	border-radius: 16px;
+	padding: 20px 32px;
+	margin-bottom: 24px;
+}
+
+.timerLabel {
+	font-size: 12px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	color: var(--text-muted);
+	margin-bottom: 8px;
+}
+
+.timerValue {
+	font-size: 48px;
+	font-weight: 700;
+	color: var(--primary);
+	font-variant-numeric: tabular-nums;
+	letter-spacing: -1px;
+}
+
+.phaseBadge {
+	display: inline-block;
+	background: var(--primary-glow);
+	color: var(--primary);
+	font-size: 12px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	padding: 4px 12px;
+	border-radius: 999px;
+	margin-top: 8px;
+}
+
+.message {
+	font-size: 14px;
+	color: var(--text-muted);
+	line-height: 1.6;
+	margin-bottom: 28px;
+}
+
+.backBtn {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	background: var(--primary);
+	color: white;
+	border: none;
+	border-radius: 12px;
+	padding: 12px 24px;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: opacity 0.15s;
+	text-decoration: none;
+}
+
+.backBtn:hover {
+	opacity: 0.85;
+}
+
+.branding {
+	margin-top: 32px;
+	font-size: 12px;
+	color: var(--text-muted);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+}
