@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 export interface TabProps {
-	badge: ReactNode;
+	badge: number | string | boolean;
 	children: ReactNode;
 	className?: string;
 	isActive: boolean;

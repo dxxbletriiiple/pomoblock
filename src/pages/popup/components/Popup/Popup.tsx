@@ -82,6 +82,10 @@ export const Popup = () => {
 	const intl = getIntl(language);
 	const isWorking =
 		state.timer.status === 'running' && state.timer.phase === 'work';
+	const hasTabBadge = (tab: Tab): number | string | boolean =>
+		tab === 'sites' &&
+		state.blockedSites.length > 0 &&
+		state.blockedSites.length;
 
 	return (
 		<div className={classNames(styles.root, styles[theme])}>
@@ -138,11 +142,7 @@ export const Popup = () => {
 						key={tab}
 						onClick={() => setActiveTab(tab)}
 						isActive={activeTab === tab}
-						badge={
-							state.blockedSites.length > 0 &&
-							tab === 'sites' &&
-							state.blockedSites.length
-						}
+						badge={hasTabBadge(tab)}
 					>
 						{intl.tabs[tab]}
 					</TabComponent>
