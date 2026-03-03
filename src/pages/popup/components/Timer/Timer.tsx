@@ -1,13 +1,22 @@
 import { useEffect, useState } from 'react';
 import {
+	PauseIcon,
+	PlayIcon,
+	ResetIcon,
+	SkipIcon,
+} from '../../../../shared/components/Icons';
+import {
 	TIMER_RING_CIRCUMFERENCE,
 	TIMER_RING_RADIUS,
 	TIMER_TICK_INTERVAL_MS,
 } from '../../../../shared/constants';
 import { getIntl } from '../../../../shared/intl';
 import { Settings, TimerState } from '../../../../shared/types';
-import { formatTimerClock, minutesToMs } from '../../../../shared/utils';
-import { PauseIcon, PlayIcon, ResetIcon, SkipIcon } from '../Icons';
+import {
+	classNames,
+	formatTimerClock,
+	minutesToMs,
+} from '../../../../shared/utils';
 import styles from './Timer.module.css';
 import { TimerProps } from './types';
 
@@ -71,7 +80,9 @@ export function Timer({
 			{/* Timer ring */}
 			<div className={styles.timerRing}>
 				<svg
-					className={`${styles.svg} ${isRunning ? styles.svgRunning : ''}`}
+					className={classNames(styles.svg, {
+						[styles.svgRunning]: isRunning,
+					})}
 					viewBox="0 0 200 200"
 				>
 					{/* Track */}
@@ -139,7 +150,10 @@ export function Timer({
 						return (
 							<div
 								key={i}
-								className={`${styles.dot} ${done ? styles.dotDone : ''} ${active ? styles.dotActive : ''}`}
+								className={classNames(styles.dot, {
+									[styles.dotDone]: done,
+									[styles.dotActive]: active,
+								})}
 								style={
 									done || active
 										? {

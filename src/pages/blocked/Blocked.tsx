@@ -1,17 +1,13 @@
 import { useEffect, useState } from 'react';
 import { APP_STATE_STORAGE_KEY, DEFAULT_STATE } from '../../shared/constants';
-import { getIntl, SUPPORTED_LANGUAGES } from '../../shared/intl';
-import type { AppLanguage, AppState, Settings, TimerState } from '../../shared/types';
-import { formatTimerClock, minutesToMs } from '../../shared/utils';
+import { getIntl } from '../../shared/intl';
+import type { AppState } from '../../shared/types';
+import {
+	formatTimerClock,
+	normalizeLanguage,
+	phaseDurationMs,
+} from '../../shared/utils';
 import styles from './Blocked.module.css';
-
-function normalizeLanguage(raw: unknown): AppLanguage {
-	if (typeof raw !== 'string') return 'en';
-	const base = raw.toLowerCase().split('-')[0];
-	return SUPPORTED_LANGUAGES.includes(base as AppLanguage)
-		? (base as AppLanguage)
-		: 'en';
-}
 
 function parseState(value: unknown): AppState {
 	if (!value || typeof value !== 'object') return DEFAULT_STATE;
@@ -27,12 +23,6 @@ function parseState(value: unknown): AppState {
 			...(parsed.timer ?? {}),
 		},
 	};
-}
-
-function phaseDurationMs(phase: TimerState['phase'], settings: Settings): number {
-	if (phase === 'work') return minutesToMs(settings.workTime);
-	if (phase === 'shortBreak') return minutesToMs(settings.shortBreak);
-	return minutesToMs(settings.longBreak);
 }
 
 export function BlockedPage() {
@@ -80,8 +70,8 @@ export function BlockedPage() {
 
 	useEffect(() => {
 		document.documentElement.lang = language;
-		document.title = `Site Blocked — PomoBlock`;
-	}, [language]);
+		document.title = `${intl.blocked.title} — PomoBlock`;
+	}, [intl.blocked.title, language]);
 
 	return (
 		<div className={styles.page}>

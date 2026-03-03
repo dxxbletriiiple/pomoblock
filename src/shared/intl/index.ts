@@ -9,7 +9,7 @@ type IntlDisplayNamesCtor = new (
 	of(code: string): string | undefined;
 };
 
-interface IntlDictionary {
+export interface IntlDictionary {
 	header: {
 		focusPill: string;
 		themeToggleTitle: string;
@@ -76,6 +76,15 @@ interface IntlDictionary {
 		hourShort: string;
 		minuteShort: string;
 	};
+}
+
+export interface IntlApi extends IntlDictionary {
+	languageName: (code: AppLanguage) => string;
+	siteCount: (count: number) => string;
+	sessionsProgress: (done: number, total: number) => string;
+	settingsFocusCount: (count: number) => string;
+	settingsShortCount: (count: number) => string;
+	removeSiteTitle: (site: string) => string;
 }
 
 const DICTIONARIES: Record<AppLanguage, IntlDictionary> = {
@@ -358,40 +367,153 @@ function pluralizeRu(
 	return `${count} ${many}`;
 }
 
+type MessageSubstitutions = string | string[];
+
+function hasChromeI18n(): boolean {
+	return (
+		typeof chrome !== 'undefined' &&
+		typeof chrome.i18n?.getMessage === 'function'
+	);
+}
+
+function getLocalizedMessage(
+	baseKey: string,
+	language: AppLanguage,
+	fallback: string,
+	substitutions?: MessageSubstitutions,
+): string {
+	if (!hasChromeI18n()) return fallback;
+
+	const value = chrome.i18n.getMessage(
+		`${baseKey}_${language}`,
+		substitutions,
+	);
+	if (value) return value;
+
+	const enValue = chrome.i18n.getMessage(`${baseKey}_en`, substitutions);
+	if (enValue) return enValue;
+
+	return fallback;
+}
+
+function localizeDictionary<T extends object>(
+	source: T,
+	language: AppLanguage,
+	prefix = '',
+): T {
+	const result: Record<string, unknown> = {};
+
+	for (const [key, value] of Object.entries(source as Record<string, unknown>)) {
+		const path = prefix ? `${prefix}_${key}` : key;
+		if (typeof value === 'string') {
+			result[key] = getLocalizedMessage(path, language, value);
+			continue;
+		}
+
+		if (value && typeof value === 'object' && !Array.isArray(value)) {
+			result[key] = localizeDictionary(
+				value as Record<string, unknown>,
+				language,
+				path,
+			);
+			continue;
+		}
+
+		result[key] = value;
+	}
+
+	return result as T;
+}
+
+function getRuPluralForm(count: number): 'one' | 'few' | 'many' {
+	const mod10 = count % 10;
+	const mod100 = count % 100;
+	if (mod10 === 1 && mod100 !== 11) return 'one';
+	if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) {
+		return 'few';
+	}
+	return 'many';
+}
+
 export function getIntl(language: AppLanguage) {
-	const t = DICTIONARIES[language] ?? DICTIONARIES.en;
+	const t = localizeDictionary<IntlDictionary>(
+		DICTIONARIES[language] ?? DICTIONARIES.en,
+		language,
+	);
 
 	return {
 		...t,
 		languageName: (code: AppLanguage) => formatLanguageName(code, language),
 		siteCount: (count: number) => {
 			if (language === 'ru') {
-				return pluralizeRu(count, 'сайт', 'сайта', 'сайтов');
+				return getLocalizedMessage(
+					`siteCount_${getRuPluralForm(count)}`,
+					language,
+					pluralizeRu(count, 'сайт', 'сайта', 'сайтов'),
+					String(count),
+				);
 			}
-			if (language === 'es') {
-				return pluralizeEn(count, 'sitio', 'sitios');
-			}
-			return pluralizeEn(count, 'site', 'sites');
+			const fallback =
+				language === 'es'
+					? pluralizeEn(count, 'sitio', 'sitios')
+					: pluralizeEn(count, 'site', 'sites');
+			return getLocalizedMessage(
+				count === 1 ? 'siteCount_one' : 'siteCount_other',
+				language,
+				fallback,
+				String(count),
+			);
 		},
 		sessionsProgress: (done: number, total: number) => {
-			if (language === 'ru') return `${done}/${total} сессий`;
-			if (language === 'es') return `${done}/${total} sesiones`;
-			return `${done}/${total} sessions`;
+			const fallback =
+				language === 'ru'
+					? `${done}/${total} сессий`
+					: language === 'es'
+						? `${done}/${total} sesiones`
+						: `${done}/${total} sessions`;
+			return getLocalizedMessage(
+				'sessionsProgress',
+				language,
+				fallback,
+				[String(done), String(total)],
+			);
 		},
 		settingsFocusCount: (count: number) => {
-			if (language === 'ru') return `× ${count} фокус`;
-			if (language === 'es') return `× ${count} enfoque`;
-			return `× ${count} focus`;
+			const fallback =
+				language === 'ru'
+					? `× ${count} фокус`
+					: language === 'es'
+						? `× ${count} enfoque`
+						: `× ${count} focus`;
+			return getLocalizedMessage(
+				'settingsFocusCount',
+				language,
+				fallback,
+				String(count),
+			);
 		},
 		settingsShortCount: (count: number) => {
-			if (language === 'ru') return `× ${count} коротк.`;
-			if (language === 'es') return `× ${count} corto`;
-			return `× ${count} short`;
+			const fallback =
+				language === 'ru'
+					? `× ${count} коротк.`
+					: language === 'es'
+						? `× ${count} corto`
+						: `× ${count} short`;
+			return getLocalizedMessage(
+				'settingsShortCount',
+				language,
+				fallback,
+				String(count),
+			);
 		},
 		removeSiteTitle: (site: string) => {
-			if (language === 'ru') return `Удалить ${site}`;
-			if (language === 'es') return `Quitar ${site}`;
-			return `Remove ${site}`;
+			const fallback =
+				language === 'ru'
+					? `Удалить ${site}`
+					: language === 'es'
+						? `Quitar ${site}`
+						: `Remove ${site}`;
+			return getLocalizedMessage('removeSiteTitle', language, fallback, site);
 		},
 	};
 }

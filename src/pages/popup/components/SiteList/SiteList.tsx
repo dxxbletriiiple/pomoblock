@@ -1,10 +1,15 @@
 import React, { useRef, useState } from 'react';
+import {
+	CloseIcon,
+	PlusIcon,
+	SearchIcon,
+} from '../../../../shared/components/Icons';
 import { getIntl } from '../../../../shared/intl';
+import { classNames } from '../../../../shared/utils';
 import {
 	isValidDomain,
 	normalizeDomain,
 } from '../../../../shared/utils/domain';
-import { CloseIcon, PlusIcon, SearchIcon } from '../Icons';
 import styles from './SiteList.module.css';
 import { SiteListProps } from './types';
 
@@ -69,7 +74,9 @@ export function SiteList({
 			{/* Add input */}
 			<div className={styles.addSection}>
 				<div
-					className={`${styles.inputWrapper} ${error ? styles.inputError : ''}`}
+					className={classNames(styles.inputWrapper, {
+						[styles.inputError]: Boolean(error),
+					})}
 				>
 					<SearchIcon className={styles.inputIcon} />
 					<input
@@ -138,7 +145,9 @@ export function SiteList({
 							{sites.map((site) => (
 								<li
 									key={site}
-									className={`${styles.siteItem} ${isBlocking ? styles.siteItemActive : ''}`}
+									className={classNames(styles.siteItem, {
+										[styles.siteItemActive]: isBlocking,
+									})}
 								>
 									<div className={styles.siteFavicon}>
 										<img

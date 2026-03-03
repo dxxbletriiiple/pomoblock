@@ -1,0 +1,551 @@
+{
+	"extensionName": {
+		"message": "PomoBlock"
+	},
+	"extensionDescription": {
+		"message": "Bloquea sitios distractores durante tus sesiones de enfoque Pomodoro"
+	},
+	"header_focusPill_en": {
+		"message": "FOCUS"
+	},
+	"header_themeToggleTitle_en": {
+		"message": "Toggle theme"
+	},
+	"header_languageSelectTitle_en": {
+		"message": "Choose language"
+	},
+	"tabs_timer_en": {
+		"message": "Timer"
+	},
+	"tabs_sites_en": {
+		"message": "Sites"
+	},
+	"tabs_settings_en": {
+		"message": "Settings"
+	},
+	"timer_phases_work_en": {
+		"message": "Focus Session"
+	},
+	"timer_phases_shortBreak_en": {
+		"message": "Short Break"
+	},
+	"timer_phases_longBreak_en": {
+		"message": "Long Break"
+	},
+	"timer_paused_en": {
+		"message": "paused"
+	},
+	"timer_startFocus_en": {
+		"message": "Start Focus"
+	},
+	"timer_pause_en": {
+		"message": "Pause"
+	},
+	"timer_resume_en": {
+		"message": "Resume"
+	},
+	"timer_skip_en": {
+		"message": "Skip"
+	},
+	"timer_reset_en": {
+		"message": "Reset"
+	},
+	"timer_skipTitle_en": {
+		"message": "Skip to next phase"
+	},
+	"timer_resetTitle_en": {
+		"message": "Reset timer"
+	},
+	"siteList_activeBanner_en": {
+		"message": "Blocking active — sites are currently blocked"
+	},
+	"siteList_placeholder_en": {
+		"message": "youtube.com, twitter.com…"
+	},
+	"siteList_add_en": {
+		"message": "Add"
+	},
+	"siteList_errorInvalidDomain_en": {
+		"message": "Enter a valid domain like youtube.com"
+	},
+	"siteList_errorDuplicateDomain_en": {
+		"message": "Already in your block list"
+	},
+	"siteList_emptyTitle_en": {
+		"message": "No sites blocked yet"
+	},
+	"siteList_emptySubtitle_en": {
+		"message": "Add websites you want to avoid during focus sessions"
+	},
+	"siteList_clearAll_en": {
+		"message": "Clear all"
+	},
+	"siteList_blockedBadge_en": {
+		"message": "blocked"
+	},
+	"blocked_title_en": {
+		"message": "Stay Focused!"
+	},
+	"blocked_subtitle_en": {
+		"message": "This site is blocked during your Pomodoro session."
+	},
+	"blocked_timerLabel_en": {
+		"message": "Time Remaining"
+	},
+	"blocked_messageLine1_en": {
+		"message": "Stay on track and finish your session strong."
+	},
+	"blocked_messageLine2_en": {
+		"message": "You can access this site during your break."
+	},
+	"blocked_backButton_en": {
+		"message": "← Go Back"
+	},
+	"settings_lockedBanner_en": {
+		"message": "Settings are locked while timer is running. Reset to make changes."
+	},
+	"settings_focusGroup_en": {
+		"message": "Focus Time"
+	},
+	"settings_breaksGroup_en": {
+		"message": "Breaks"
+	},
+	"settings_cyclesGroup_en": {
+		"message": "Cycles"
+	},
+	"settings_workDurationLabel_en": {
+		"message": "Work Duration"
+	},
+	"settings_workDurationDesc_en": {
+		"message": "Length of each focus session"
+	},
+	"settings_shortBreakLabel_en": {
+		"message": "Short Break"
+	},
+	"settings_shortBreakDesc_en": {
+		"message": "Rest after each focus session"
+	},
+	"settings_longBreakLabel_en": {
+		"message": "Long Break"
+	},
+	"settings_longBreakDesc_en": {
+		"message": "Rest after completing all cycles"
+	},
+	"settings_sessionsPerSetLabel_en": {
+		"message": "Sessions per Set"
+	},
+	"settings_sessionsPerSetDesc_en": {
+		"message": "Focus sessions before a long break"
+	},
+	"settings_unitMin_en": {
+		"message": "min"
+	},
+	"settings_unitSessions_en": {
+		"message": "sessions"
+	},
+	"settings_previewWork_en": {
+		"message": "Work"
+	},
+	"settings_previewShort_en": {
+		"message": "Short"
+	},
+	"settings_previewLong_en": {
+		"message": "Long"
+	},
+	"settings_summaryLongBreak_en": {
+		"message": "long break"
+	},
+	"settings_summaryTotal_en": {
+		"message": "total"
+	},
+	"settings_reportBug_en": {
+		"message": "Report a bug"
+	},
+	"common_hourShort_en": {
+		"message": "h"
+	},
+	"common_minuteShort_en": {
+		"message": "m"
+	},
+	"siteCount_one_en": {
+		"message": "$1 site"
+	},
+	"siteCount_other_en": {
+		"message": "$1 sites"
+	},
+	"sessionsProgress_en": {
+		"message": "$1/$2 sessions"
+	},
+	"settingsFocusCount_en": {
+		"message": "× $1 focus"
+	},
+	"settingsShortCount_en": {
+		"message": "× $1 short"
+	},
+	"removeSiteTitle_en": {
+		"message": "Remove $1"
+	},
+	"header_focusPill_ru": {
+		"message": "ФОКУС"
+	},
+	"header_themeToggleTitle_ru": {
+		"message": "Сменить тему"
+	},
+	"header_languageSelectTitle_ru": {
+		"message": "Выбрать язык"
+	},
+	"tabs_timer_ru": {
+		"message": "Таймер"
+	},
+	"tabs_sites_ru": {
+		"message": "Сайты"
+	},
+	"tabs_settings_ru": {
+		"message": "Настройки"
+	},
+	"timer_phases_work_ru": {
+		"message": "Фокус-сессия"
+	},
+	"timer_phases_shortBreak_ru": {
+		"message": "Короткий перерыв"
+	},
+	"timer_phases_longBreak_ru": {
+		"message": "Длинный перерыв"
+	},
+	"timer_paused_ru": {
+		"message": "пауза"
+	},
+	"timer_startFocus_ru": {
+		"message": "Начать фокус"
+	},
+	"timer_pause_ru": {
+		"message": "Пауза"
+	},
+	"timer_resume_ru": {
+		"message": "Продолжить"
+	},
+	"timer_skip_ru": {
+		"message": "Пропустить"
+	},
+	"timer_reset_ru": {
+		"message": "Сброс"
+	},
+	"timer_skipTitle_ru": {
+		"message": "Перейти к следующей фазе"
+	},
+	"timer_resetTitle_ru": {
+		"message": "Сбросить таймер"
+	},
+	"siteList_activeBanner_ru": {
+		"message": "Блокировка активна — сайты сейчас заблокированы"
+	},
+	"siteList_placeholder_ru": {
+		"message": "youtube.com, twitter.com…"
+	},
+	"siteList_add_ru": {
+		"message": "Добавить"
+	},
+	"siteList_errorInvalidDomain_ru": {
+		"message": "Введите корректный домен, например youtube.com"
+	},
+	"siteList_errorDuplicateDomain_ru": {
+		"message": "Сайт уже в списке блокировки"
+	},
+	"siteList_emptyTitle_ru": {
+		"message": "Пока нет заблокированных сайтов"
+	},
+	"siteList_emptySubtitle_ru": {
+		"message": "Добавьте сайты, которых хотите избегать во время фокуса"
+	},
+	"siteList_clearAll_ru": {
+		"message": "Очистить все"
+	},
+	"siteList_blockedBadge_ru": {
+		"message": "блок"
+	},
+	"blocked_title_ru": {
+		"message": "Сфокусируйтесь!"
+	},
+	"blocked_subtitle_ru": {
+		"message": "Этот сайт заблокирован во время вашей помодоро-сессии."
+	},
+	"blocked_timerLabel_ru": {
+		"message": "Оставшееся время"
+	},
+	"blocked_messageLine1_ru": {
+		"message": "Держите фокус и завершите сессию уверенно."
+	},
+	"blocked_messageLine2_ru": {
+		"message": "Вы сможете открыть этот сайт во время перерыва."
+	},
+	"blocked_backButton_ru": {
+		"message": "← Назад"
+	},
+	"settings_lockedBanner_ru": {
+		"message": "Настройки заблокированы во время работы таймера. Сбросьте таймер, чтобы изменить их."
+	},
+	"settings_focusGroup_ru": {
+		"message": "Фокус"
+	},
+	"settings_breaksGroup_ru": {
+		"message": "Перерывы"
+	},
+	"settings_cyclesGroup_ru": {
+		"message": "Циклы"
+	},
+	"settings_workDurationLabel_ru": {
+		"message": "Длительность работы"
+	},
+	"settings_workDurationDesc_ru": {
+		"message": "Длина одной фокус-сессии"
+	},
+	"settings_shortBreakLabel_ru": {
+		"message": "Короткий перерыв"
+	},
+	"settings_shortBreakDesc_ru": {
+		"message": "Отдых после каждой фокус-сессии"
+	},
+	"settings_longBreakLabel_ru": {
+		"message": "Длинный перерыв"
+	},
+	"settings_longBreakDesc_ru": {
+		"message": "Отдых после завершения всех циклов"
+	},
+	"settings_sessionsPerSetLabel_ru": {
+		"message": "Сессий в цикле"
+	},
+	"settings_sessionsPerSetDesc_ru": {
+		"message": "Фокус-сессий до длинного перерыва"
+	},
+	"settings_unitMin_ru": {
+		"message": "мин"
+	},
+	"settings_unitSessions_ru": {
+		"message": "сесс."
+	},
+	"settings_previewWork_ru": {
+		"message": "Работа"
+	},
+	"settings_previewShort_ru": {
+		"message": "Коротк."
+	},
+	"settings_previewLong_ru": {
+		"message": "Длинн."
+	},
+	"settings_summaryLongBreak_ru": {
+		"message": "длинный перерыв"
+	},
+	"settings_summaryTotal_ru": {
+		"message": "итого"
+	},
+	"settings_reportBug_ru": {
+		"message": "Сообщить об ошибке"
+	},
+	"common_hourShort_ru": {
+		"message": "ч"
+	},
+	"common_minuteShort_ru": {
+		"message": "м"
+	},
+	"siteCount_one_ru": {
+		"message": "$1 сайт"
+	},
+	"siteCount_few_ru": {
+		"message": "$1 сайта"
+	},
+	"siteCount_many_ru": {
+		"message": "$1 сайтов"
+	},
+	"sessionsProgress_ru": {
+		"message": "$1/$2 сессий"
+	},
+	"settingsFocusCount_ru": {
+		"message": "× $1 фокус"
+	},
+	"settingsShortCount_ru": {
+		"message": "× $1 коротк."
+	},
+	"removeSiteTitle_ru": {
+		"message": "Удалить $1"
+	},
+	"header_focusPill_es": {
+		"message": "FOCO"
+	},
+	"header_themeToggleTitle_es": {
+		"message": "Cambiar tema"
+	},
+	"header_languageSelectTitle_es": {
+		"message": "Elegir idioma"
+	},
+	"tabs_timer_es": {
+		"message": "Temporizador"
+	},
+	"tabs_sites_es": {
+		"message": "Sitios"
+	},
+	"tabs_settings_es": {
+		"message": "Ajustes"
+	},
+	"timer_phases_work_es": {
+		"message": "Sesión de enfoque"
+	},
+	"timer_phases_shortBreak_es": {
+		"message": "Descanso corto"
+	},
+	"timer_phases_longBreak_es": {
+		"message": "Descanso largo"
+	},
+	"timer_paused_es": {
+		"message": "pausado"
+	},
+	"timer_startFocus_es": {
+		"message": "Iniciar enfoque"
+	},
+	"timer_pause_es": {
+		"message": "Pausar"
+	},
+	"timer_resume_es": {
+		"message": "Reanudar"
+	},
+	"timer_skip_es": {
+		"message": "Saltar"
+	},
+	"timer_reset_es": {
+		"message": "Reiniciar"
+	},
+	"timer_skipTitle_es": {
+		"message": "Saltar a la siguiente fase"
+	},
+	"timer_resetTitle_es": {
+		"message": "Reiniciar temporizador"
+	},
+	"siteList_activeBanner_es": {
+		"message": "Bloqueo activo — los sitios están bloqueados ahora mismo"
+	},
+	"siteList_placeholder_es": {
+		"message": "youtube.com, twitter.com…"
+	},
+	"siteList_add_es": {
+		"message": "Agregar"
+	},
+	"siteList_errorInvalidDomain_es": {
+		"message": "Ingresa un dominio válido como youtube.com"
+	},
+	"siteList_errorDuplicateDomain_es": {
+		"message": "Ya está en tu lista de bloqueo"
+	},
+	"siteList_emptyTitle_es": {
+		"message": "Todavía no hay sitios bloqueados"
+	},
+	"siteList_emptySubtitle_es": {
+		"message": "Agrega sitios web que quieras evitar durante el enfoque"
+	},
+	"siteList_clearAll_es": {
+		"message": "Borrar todo"
+	},
+	"siteList_blockedBadge_es": {
+		"message": "bloq."
+	},
+	"blocked_title_es": {
+		"message": "¡Mantén el foco!"
+	},
+	"blocked_subtitle_es": {
+		"message": "Este sitio está bloqueado durante tu sesión Pomodoro."
+	},
+	"blocked_timerLabel_es": {
+		"message": "Tiempo restante"
+	},
+	"blocked_messageLine1_es": {
+		"message": "Mantente en camino y termina tu sesión con fuerza."
+	},
+	"blocked_messageLine2_es": {
+		"message": "Podrás acceder a este sitio durante tu descanso."
+	},
+	"blocked_backButton_es": {
+		"message": "← Volver"
+	},
+	"settings_lockedBanner_es": {
+		"message": "Los ajustes están bloqueados mientras el temporizador está activo. Reinicia para cambiarlos."
+	},
+	"settings_focusGroup_es": {
+		"message": "Enfoque"
+	},
+	"settings_breaksGroup_es": {
+		"message": "Descansos"
+	},
+	"settings_cyclesGroup_es": {
+		"message": "Ciclos"
+	},
+	"settings_workDurationLabel_es": {
+		"message": "Duración de trabajo"
+	},
+	"settings_workDurationDesc_es": {
+		"message": "Duración de cada sesión de enfoque"
+	},
+	"settings_shortBreakLabel_es": {
+		"message": "Descanso corto"
+	},
+	"settings_shortBreakDesc_es": {
+		"message": "Descanso después de cada sesión"
+	},
+	"settings_longBreakLabel_es": {
+		"message": "Descanso largo"
+	},
+	"settings_longBreakDesc_es": {
+		"message": "Descanso tras completar todos los ciclos"
+	},
+	"settings_sessionsPerSetLabel_es": {
+		"message": "Sesiones por ciclo"
+	},
+	"settings_sessionsPerSetDesc_es": {
+		"message": "Sesiones antes de un descanso largo"
+	},
+	"settings_unitMin_es": {
+		"message": "min"
+	},
+	"settings_unitSessions_es": {
+		"message": "ses."
+	},
+	"settings_previewWork_es": {
+		"message": "Trabajo"
+	},
+	"settings_previewShort_es": {
+		"message": "Corto"
+	},
+	"settings_previewLong_es": {
+		"message": "Largo"
+	},
+	"settings_summaryLongBreak_es": {
+		"message": "descanso largo"
+	},
+	"settings_summaryTotal_es": {
+		"message": "total"
+	},
+	"settings_reportBug_es": {
+		"message": "Reportar un error"
+	},
+	"common_hourShort_es": {
+		"message": "h"
+	},
+	"common_minuteShort_es": {
+		"message": "m"
+	},
+	"siteCount_one_es": {
+		"message": "$1 sitio"
+	},
+	"siteCount_other_es": {
+		"message": "$1 sitios"
+	},
+	"sessionsProgress_es": {
+		"message": "$1/$2 sesiones"
+	},
+	"settingsFocusCount_es": {
+		"message": "× $1 enfoque"
+	},
+	"settingsShortCount_es": {
+		"message": "× $1 corto"
+	},
+	"removeSiteTitle_es": {
+		"message": "Quitar $1"
+	}
+}

@@ -1,5 +1,9 @@
 export type AppLanguage = 'en' | 'ru' | 'es';
 
+export type Tab = 'timer' | 'sites' | 'settings';
+
+export type Tabs = ['timer', 'sites', 'settings'];
+
 export interface Settings {
 	workTime: number; // 15|20|25|30|45|60|90
 	shortBreak: number; // 5|10

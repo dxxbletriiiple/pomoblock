@@ -1,5 +1,12 @@
 import React from 'react';
 import {
+	CycleIcon,
+	LongBreakIcon,
+	ShortBreakIcon,
+	WarningIcon,
+	WorkIcon,
+} from '../../../../shared/components/Icons';
+import {
 	BUG_REPORT_URL,
 	CYCLES,
 	LONG_BREAKS,
@@ -8,13 +15,7 @@ import {
 } from '../../../../shared/constants';
 import { getIntl } from '../../../../shared/intl';
 import { Settings, TimerStatus } from '../../../../shared/types';
-import {
-	CycleIcon,
-	LongBreakIcon,
-	ShortBreakIcon,
-	WarningIcon,
-	WorkIcon,
-} from '../Icons';
+import { classNames } from '../../../../shared/utils';
 import styles from './SettingsPanel.module.css';
 import { SelectFieldProps } from './types';
 
@@ -36,9 +37,7 @@ function SelectField({
 	onChange,
 }: SelectFieldProps) {
 	return (
-		<div
-			className={`${styles.field} ${disabled ? styles.fieldDisabled : ''}`}
-		>
+		<div className={classNames(styles.field, { [styles.fieldDisabled]: disabled })}>
 			<div className={styles.fieldLeft}>
 				<div
 					className={styles.fieldIcon}
@@ -90,7 +89,9 @@ export function SettingsPanel({ settings, timerStatus, onChange }: Props) {
 
 			{/* Work time */}
 			<div className={styles.group}>
-				<h3 className={styles.groupTitle}>{intl.settings.focusGroup}</h3>
+				<h3 className={styles.groupTitle}>
+					{intl.settings.focusGroup}
+				</h3>
 				<SelectField
 					label={intl.settings.workDurationLabel}
 					description={intl.settings.workDurationDesc}
@@ -106,7 +107,9 @@ export function SettingsPanel({ settings, timerStatus, onChange }: Props) {
 
 			{/* Breaks */}
 			<div className={styles.group}>
-				<h3 className={styles.groupTitle}>{intl.settings.breaksGroup}</h3>
+				<h3 className={styles.groupTitle}>
+					{intl.settings.breaksGroup}
+				</h3>
 				<SelectField
 					label={intl.settings.shortBreakLabel}
 					description={intl.settings.shortBreakDesc}
@@ -133,7 +136,9 @@ export function SettingsPanel({ settings, timerStatus, onChange }: Props) {
 
 			{/* Cycles */}
 			<div className={styles.group}>
-				<h3 className={styles.groupTitle}>{intl.settings.cyclesGroup}</h3>
+				<h3 className={styles.groupTitle}>
+					{intl.settings.cyclesGroup}
+				</h3>
 				<SelectField
 					label={intl.settings.sessionsPerSetLabel}
 					description={intl.settings.sessionsPerSetDesc}

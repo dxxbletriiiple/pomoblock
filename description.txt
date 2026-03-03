@@ -1,0 +1,33 @@
+Extension Name
+PomoBlock
+
+Short Description
+Stay focused with Pomodoro sessions that automatically block distracting websites and unblock them on breaks.
+
+Detailed Description
+PomoBlock helps you stay in deep focus by combining a Pomodoro timer with automatic website blocking.
+
+Start a focus session, and your selected distracting sites are blocked instantly, including tabs that are already open.
+When your work session ends, those sites are unblocked automatically so you can take your break without friction.
+
+What you can do with PomoBlock:
+- Run focus, short break, and long break Pomodoro cycles
+- Customize work/break durations and cycle count
+- Build and manage your personal block list
+- Automatically block/unblock sites based on timer phase
+- Keep timer state persistent even if popup/service worker restarts
+- Use the extension in English, Russian, or Spanish
+- Switch between light and dark themes
+
+Designed for:
+- Students
+- Developers
+- Remote workers
+- Anyone who wants fewer distractions and better focus
+
+Privacy:
+PomoBlock works locally in your browser.
+No accounts, no tracking, no remote analytics.
+
+Support / bug reports:
+https://github.com/dxxbletriiiple/pomoblock/issues/new/choose

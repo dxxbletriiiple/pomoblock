@@ -4,17 +4,24 @@ import {
 	AppLanguage,
 	AppMessage,
 	AppState,
+	classNames,
 	DEFAULT_STATE,
 	getIntl,
 	Settings,
 	SUPPORTED_LANGUAGES,
+	Tab,
+	TabComponent,
+	TABS,
 } from '../../../../shared';
-import { LanguageIcon, MoonIcon, SunIcon } from '../Icons';
+import {
+	LanguageIcon,
+	MoonIcon,
+	SunIcon,
+} from '../../../../shared/components/Icons';
 import { SettingsPanel } from '../SettingsPanel/SettingsPanel';
 import { SiteList } from '../SiteList';
 import { Timer } from '../Timer';
 import styles from './Popup.module.css';
-import { Tab } from './types';
 
 export const Popup = () => {
 	const [state, setState] = useState<AppState>(DEFAULT_STATE);
@@ -77,9 +84,7 @@ export const Popup = () => {
 		state.timer.status === 'running' && state.timer.phase === 'work';
 
 	return (
-		<div
-			className={`${styles.root} ${theme === 'dark' ? styles.dark : styles.light}`}
-		>
+		<div className={classNames(styles.root, styles[theme])}>
 			{/* Header */}
 			<header className={styles.header}>
 				<div className={styles.logo}>
@@ -128,25 +133,19 @@ export const Popup = () => {
 
 			{/* Tabs */}
 			<nav className={styles.tabs}>
-				{(['timer', 'sites', 'settings'] as Tab[]).map((tab) => (
-					<button
+				{TABS.map((tab) => (
+					<TabComponent
 						key={tab}
-						className={`${styles.tab} ${activeTab === tab ? styles.tabActive : ''}`}
 						onClick={() => setActiveTab(tab)}
+						isActive={activeTab === tab}
+						badge={
+							state.blockedSites.length > 0 &&
+							tab === 'sites' &&
+							state.blockedSites.length
+						}
 					>
-						{tab === 'timer' && intl.tabs.timer}
-						{tab === 'sites' && (
-							<>
-								{intl.tabs.sites}
-								{state.blockedSites.length > 0 && (
-									<span className={styles.badge}>
-										{state.blockedSites.length}
-									</span>
-								)}
-							</>
-						)}
-						{tab === 'settings' && intl.tabs.settings}
-					</button>
+						{intl.tabs[tab]}
+					</TabComponent>
 				))}
 			</nav>
 
