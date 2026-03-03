@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import {
 	PauseIcon,
 	PlayIcon,
@@ -8,13 +7,13 @@ import {
 import {
 	TIMER_RING_CIRCUMFERENCE,
 	TIMER_RING_RADIUS,
-	TIMER_TICK_INTERVAL_MS,
 } from '../../../../shared/constants';
 import { TimerState } from '../../../../shared/types';
 import {
 	classNames,
 	formatTimerClock,
 	phaseDurationMs,
+	useSynchronizedTimerDisplay,
 } from '../../../../shared/utils';
 import { usePopupContext } from '../../context';
 import styles from './Timer.module.css';
@@ -28,24 +27,7 @@ function phaseColorVar(phase: TimerState['phase']): string {
 export function Timer() {
 	const { intl, pause, reset, resume, skip, start, state } = usePopupContext();
 	const { settings, timer } = state;
-	const [displayMs, setDisplayMs] = useState(0);
-
-	useEffect(() => {
-		const compute = () => {
-			if (timer.status === 'running' && timer.endTime != null) {
-				setDisplayMs(Math.max(0, timer.endTime - Date.now()));
-			} else if (timer.status === 'paused' && timer.remainingMs != null) {
-				setDisplayMs(timer.remainingMs);
-			} else {
-				setDisplayMs(phaseDurationMs(timer.phase, settings));
-			}
-		};
-
-		compute();
-		if (timer.status !== 'running') return;
-		const id = setInterval(compute, TIMER_TICK_INTERVAL_MS);
-		return () => clearInterval(id);
-	}, [timer, settings]);
+	const displayMs = useSynchronizedTimerDisplay(timer, settings);
 
 	const total = phaseDurationMs(timer.phase, settings);
 	const progress = total > 0 ? Math.max(0, Math.min(1, displayMs / total)) : 1;
