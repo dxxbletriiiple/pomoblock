@@ -4,25 +4,21 @@ import {
 	PlusIcon,
 	SearchIcon,
 } from '../../../../shared/components/Icons';
-import { getIntl } from '../../../../shared/intl';
 import { classNames } from '../../../../shared/utils';
 import {
 	isValidDomain,
 	normalizeDomain,
 } from '../../../../shared/utils/domain';
+import { usePopupContext } from '../../context';
 import styles from './SiteList.module.css';
-import { SiteListProps } from './types';
 
-export function SiteList({
-	sites,
-	language,
-	isBlocking,
-	onChange,
-}: SiteListProps) {
+export function SiteList() {
+	const { intl, isWorking, state, updateSites } = usePopupContext();
+	const sites = state.blockedSites;
+	const isBlocking = isWorking;
 	const [inputValue, setInputValue] = useState('');
 	const [error, setError] = useState('');
 	const inputRef = useRef<HTMLInputElement>(null);
-	const intl = getIntl(language);
 
 	const handleAdd = () => {
 		const domain = normalizeDomain(inputValue);
@@ -38,14 +34,14 @@ export function SiteList({
 			return;
 		}
 
-		onChange([...sites, domain]);
+		updateSites([...sites, domain]);
 		setInputValue('');
 		setError('');
 		inputRef.current?.focus();
 	};
 
 	const handleRemove = (domain: string) => {
-		onChange(sites.filter((s) => s !== domain));
+		updateSites(sites.filter((s) => s !== domain));
 	};
 
 	const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -132,11 +128,11 @@ export function SiteList({
 							<span className={styles.listCount}>
 								{intl.siteCount(sites.length)}
 							</span>
-							{sites.length > 1 && (
-								<button
-									className={styles.clearAllBtn}
-									onClick={() => onChange([])}
-								>
+								{sites.length > 1 && (
+									<button
+										className={styles.clearAllBtn}
+										onClick={() => updateSites([])}
+									>
 									{intl.siteList.clearAll}
 								</button>
 							)}

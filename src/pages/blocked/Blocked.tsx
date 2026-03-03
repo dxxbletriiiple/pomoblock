@@ -1,72 +1,10 @@
-import { useEffect, useState } from 'react';
-import { APP_STATE_STORAGE_KEY, DEFAULT_STATE } from '../../shared/constants';
-import { getIntl } from '../../shared/intl';
-import type { AppState } from '../../shared/types';
-import {
-	formatTimerClock,
-	normalizeLanguage,
-	phaseDurationMs,
-} from '../../shared/utils';
+import { useEffect } from 'react';
+import { classNames, formatTimerClock } from '../../shared/utils';
+import { BlockedProvider, useBlockedContext } from './context';
 import styles from './Blocked.module.css';
 
-function parseState(value: unknown): AppState {
-	if (!value || typeof value !== 'object') return DEFAULT_STATE;
-	const parsed = value as Partial<AppState>;
-	return {
-		settings: {
-			...DEFAULT_STATE.settings,
-			...(parsed.settings ?? {}),
-		},
-		blockedSites: parsed.blockedSites ?? [],
-		timer: {
-			...DEFAULT_STATE.timer,
-			...(parsed.timer ?? {}),
-		},
-	};
-}
-
-export function BlockedPage() {
-	const [state, setState] = useState<AppState>(DEFAULT_STATE);
-	const [displayMs, setDisplayMs] = useState(
-		phaseDurationMs(DEFAULT_STATE.timer.phase, DEFAULT_STATE.settings),
-	);
-
-	useEffect(() => {
-		chrome.storage.local.get(APP_STATE_STORAGE_KEY, (data) => {
-			setState(parseState(data[APP_STATE_STORAGE_KEY]));
-		});
-
-		const listener = (changes: {
-			[key: string]: chrome.storage.StorageChange;
-		}) => {
-			if (changes[APP_STATE_STORAGE_KEY]?.newValue) {
-				setState(parseState(changes[APP_STATE_STORAGE_KEY].newValue));
-			}
-		};
-		chrome.storage.onChanged.addListener(listener);
-		return () => chrome.storage.onChanged.removeListener(listener);
-	}, []);
-
-	useEffect(() => {
-		const compute = () => {
-			const { timer, settings } = state;
-			if (timer.status === 'running' && timer.endTime != null) {
-				setDisplayMs(Math.max(0, timer.endTime - Date.now()));
-			} else if (timer.status === 'paused' && timer.remainingMs != null) {
-				setDisplayMs(timer.remainingMs);
-			} else {
-				setDisplayMs(phaseDurationMs(timer.phase, settings));
-			}
-		};
-
-		compute();
-		if (state.timer.status !== 'running') return;
-		const id = setInterval(compute, 500);
-		return () => clearInterval(id);
-	}, [state]);
-
-	const language = normalizeLanguage(state.settings.language);
-	const intl = getIntl(language);
+function BlockedContent() {
+	const { displayMs, intl, language, state, theme } = useBlockedContext();
 
 	useEffect(() => {
 		document.documentElement.lang = language;
@@ -74,7 +12,12 @@ export function BlockedPage() {
 	}, [intl.blocked.title, language]);
 
 	return (
-		<div className={styles.page}>
+		<div
+			className={classNames(styles.page, {
+				[styles.themeDark]: theme === 'dark',
+				[styles.themeLight]: theme === 'light',
+			})}
+		>
 			<div className={styles.card}>
 				<span className={styles.tomato}>🍅</span>
 				<h1>{intl.blocked.title}</h1>
@@ -111,5 +54,13 @@ export function BlockedPage() {
 				</div>
 			</div>
 		</div>
+	);
+}
+
+export function BlockedPage() {
+	return (
+		<BlockedProvider>
+			<BlockedContent />
+		</BlockedProvider>
 	);
 }

@@ -1,0 +1,135 @@
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 14px 16px 12px;
+	border-bottom: 1px solid var(--border);
+	background: var(--surface);
+	transition:
+		background 0.2s,
+		border-color 0.2s;
+}
+
+.headerActions {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.logo {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.logoIcon {
+	font-size: 20px;
+	line-height: 1;
+}
+
+.logoText {
+	font-size: 16px;
+	font-weight: 700;
+	letter-spacing: -0.3px;
+	color: var(--text);
+}
+
+.activePill {
+	background: var(--primary-glow);
+	color: var(--primary);
+	font-size: 9px;
+	font-weight: 700;
+	letter-spacing: 0.8px;
+	padding: 2px 7px;
+	border-radius: 999px;
+	border: 1px solid var(--primary);
+	animation: pulse-pill 2s ease-in-out infinite;
+}
+
+@keyframes pulse-pill {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.6;
+	}
+}
+
+.themeBtn {
+	width: 34px;
+	height: 34px;
+	border-radius: 10px;
+	background: var(--surface-alt);
+	border: 1px solid var(--border);
+	color: var(--text-secondary);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition:
+		background 0.15s,
+		color 0.15s,
+		transform 0.15s;
+}
+
+.themeBtn:hover {
+	background: var(--surface-hover);
+	color: var(--text);
+	transform: scale(1.05);
+}
+
+.themeBtn svg {
+	width: 16px;
+	height: 16px;
+}
+
+.languagePicker {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	height: 34px;
+	min-width: 118px;
+	padding: 0 8px 0 30px;
+	border-radius: 10px;
+	background: var(--surface-alt);
+	border: 1px solid var(--border);
+	color: var(--text-secondary);
+	transition:
+		background 0.15s,
+		border-color 0.15s;
+}
+
+.languagePicker:hover {
+	background: var(--surface-hover);
+}
+
+.languageIcon {
+	position: absolute;
+	left: 10px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--text-secondary);
+	pointer-events: none;
+}
+
+.languageIcon svg {
+	width: 14px;
+	height: 14px;
+}
+
+.languageSelect {
+	width: 100%;
+	border: none;
+	outline: none;
+	background: transparent;
+	color: var(--text);
+	font-size: 12px;
+	font-weight: 600;
+	cursor: pointer;
+	padding-right: 4px;
+}
+
+.languageSelect option {
+	color: #111827;
+}

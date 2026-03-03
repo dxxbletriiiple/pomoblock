@@ -13,17 +13,10 @@ import {
 	SHORT_BREAKS,
 	WORK_TIMES,
 } from '../../../../shared/constants';
-import { getIntl } from '../../../../shared/intl';
-import { Settings, TimerStatus } from '../../../../shared/types';
 import { classNames } from '../../../../shared/utils';
+import { usePopupContext } from '../../context';
 import styles from './SettingsPanel.module.css';
 import { SelectFieldProps } from './types';
-
-interface Props {
-	settings: Settings;
-	timerStatus: TimerStatus;
-	onChange: (patch: Partial<Settings>) => void;
-}
 
 function SelectField({
 	label,
@@ -37,13 +30,15 @@ function SelectField({
 	onChange,
 }: SelectFieldProps) {
 	return (
-		<div className={classNames(styles.field, { [styles.fieldDisabled]: disabled })}>
+		<div
+			className={classNames(styles.field, {
+				[styles.fieldDisabled]: disabled,
+			})}
+		>
 			<div className={styles.fieldLeft}>
 				<div
 					className={styles.fieldIcon}
-					style={
-						color ? { background: `${color}20`, color } : undefined
-					}
+					style={color ? { background: `${color}20`, color } : undefined}
 				>
 					{icon}
 				</div>
@@ -68,9 +63,10 @@ function SelectField({
 	);
 }
 
-export function SettingsPanel({ settings, timerStatus, onChange }: Props) {
-	const isActive = timerStatus !== 'idle';
-	const intl = getIntl(settings.language);
+export function SettingsPanel() {
+	const { intl, state, updateSettings } = usePopupContext();
+	const { settings, timer } = state;
+	const isActive = timer.status !== 'idle';
 	const totalMinutes =
 		settings.workTime * settings.cycles +
 		settings.shortBreak * (settings.cycles - 1) +
@@ -87,11 +83,8 @@ export function SettingsPanel({ settings, timerStatus, onChange }: Props) {
 				</div>
 			)}
 
-			{/* Work time */}
 			<div className={styles.group}>
-				<h3 className={styles.groupTitle}>
-					{intl.settings.focusGroup}
-				</h3>
+				<h3 className={styles.groupTitle}>{intl.settings.focusGroup}</h3>
 				<SelectField
 					label={intl.settings.workDurationLabel}
 					description={intl.settings.workDurationDesc}
@@ -101,15 +94,12 @@ export function SettingsPanel({ settings, timerStatus, onChange }: Props) {
 					unit={intl.settings.unitMin}
 					disabled={isActive}
 					color="var(--primary)"
-					onChange={(v) => onChange({ workTime: v })}
+					onChange={(v) => updateSettings({ workTime: v })}
 				/>
 			</div>
 
-			{/* Breaks */}
 			<div className={styles.group}>
-				<h3 className={styles.groupTitle}>
-					{intl.settings.breaksGroup}
-				</h3>
+				<h3 className={styles.groupTitle}>{intl.settings.breaksGroup}</h3>
 				<SelectField
 					label={intl.settings.shortBreakLabel}
 					description={intl.settings.shortBreakDesc}
@@ -119,7 +109,7 @@ export function SettingsPanel({ settings, timerStatus, onChange }: Props) {
 					unit={intl.settings.unitMin}
 					disabled={isActive}
 					color="var(--break)"
-					onChange={(v) => onChange({ shortBreak: v })}
+					onChange={(v) => updateSettings({ shortBreak: v })}
 				/>
 				<SelectField
 					label={intl.settings.longBreakLabel}
@@ -130,15 +120,12 @@ export function SettingsPanel({ settings, timerStatus, onChange }: Props) {
 					unit={intl.settings.unitMin}
 					disabled={isActive}
 					color="var(--break-long)"
-					onChange={(v) => onChange({ longBreak: v })}
+					onChange={(v) => updateSettings({ longBreak: v })}
 				/>
 			</div>
 
-			{/* Cycles */}
 			<div className={styles.group}>
-				<h3 className={styles.groupTitle}>
-					{intl.settings.cyclesGroup}
-				</h3>
+				<h3 className={styles.groupTitle}>{intl.settings.cyclesGroup}</h3>
 				<SelectField
 					label={intl.settings.sessionsPerSetLabel}
 					description={intl.settings.sessionsPerSetDesc}
@@ -147,10 +134,9 @@ export function SettingsPanel({ settings, timerStatus, onChange }: Props) {
 					options={CYCLES}
 					unit={intl.settings.unitSessions}
 					disabled={isActive}
-					onChange={(v) => onChange({ cycles: v })}
+					onChange={(v) => updateSettings({ cycles: v })}
 				/>
 
-				{/* Visual cycle preview */}
 				<div className={styles.cyclePreview}>
 					{Array.from({ length: settings.cycles }, (_, i) => (
 						<React.Fragment key={i}>

@@ -1,11 +1,4 @@
 .page {
-	--bg: #0d0d14;
-	--surface: #1a1a24;
-	--border: #2a2a38;
-	--text: #f0f0f5;
-	--text-muted: #9ca3af;
-	--primary: #ef4444;
-	--primary-glow: rgba(239, 68, 68, 0.2);
 	background: var(--bg);
 	color: var(--text);
 	font-family:
@@ -17,16 +10,24 @@
 	padding: 24px;
 }
 
-@media (prefers-color-scheme: light) {
-	.page {
-		--bg: #f7f7f8;
-		--surface: #ffffff;
-		--border: #e5e7eb;
-		--text: #111827;
-		--text-muted: #6b7280;
-		--primary: #ef4444;
-		--primary-glow: rgba(239, 68, 68, 0.1);
-	}
+.themeDark {
+	--bg: #0d0d14;
+	--surface: #1a1a24;
+	--border: #2a2a38;
+	--text: #f0f0f5;
+	--text-muted: #9ca3af;
+	--primary: #ef4444;
+	--primary-glow: rgba(239, 68, 68, 0.2);
+}
+
+.themeLight {
+	--bg: #f7f7f8;
+	--surface: #ffffff;
+	--border: #e5e7eb;
+	--text: #111827;
+	--text-muted: #6b7280;
+	--primary: #ef4444;
+	--primary-glow: rgba(239, 68, 68, 0.1);
 }
 
 .card {
