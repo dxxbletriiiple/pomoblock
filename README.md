@@ -8,6 +8,8 @@ A Chrome extension that blocks distracting websites during your Pomodoro focus s
 - Automatic website blocking during work sessions via Chrome's `declarativeNetRequest` API
 - Sites unblock automatically on breaks and re-block when the next session starts
 - Persistent timer state — the countdown survives popup close and browser restarts via `chrome.alarms`
+- Popup and blocked page timer displays are synchronized to the same second
+- Built-in localization via Chrome `i18n` (`en`, `ru`, `es`)
 - Light / dark theme
 - Fully local — no accounts, no network requests, no tracking
 
@@ -19,15 +21,16 @@ A Chrome extension that blocks distracting websites during your Pomodoro focus s
 | Bundler | Vite 5 |
 | Styling | CSS Modules |
 | Extension API | Chrome Manifest V3 |
-| State persistence | `chrome.storage.local` |
+| State persistence | `chrome.storage.local` + React Context |
 | Timer | `chrome.alarms` (survives service worker termination) |
 
 ## Project Structure
 
-```
+``` 
 pomoblock/
 ├── public/
-│   └── blocked.html         # Page shown when a site is blocked
+│   ├── _locales/            # Chrome i18n dictionaries (en, ru, es)
+│   └── icons/               # Extension icons
 ├── src/
 │   ├── app/
 │   │   ├── App.tsx          # App wrapper (renders popup page)
@@ -39,26 +42,35 @@ pomoblock/
 │   ├── content/
 │   │   └── blockContent.ts  # Overlay helper (content script placeholder)
 │   ├── pages/
+│   │   ├── blocked/
+│   │   │   ├── Blocked.tsx
+│   │   │   ├── Blocked.module.css
+│   │   │   ├── context/
+│   │   │   │   └── BlockedContext.tsx
+│   │   │   └── index.tsx
 │   │   └── popup/
-│   │       ├── Popup.tsx    # Popup page component
-│   │       ├── index.tsx    # React entry point
-│   │       ├── Popup.module.css
+│   │       ├── components/
+│   │       │   ├── Popup/
+│   │       │   ├── Timer/
+│   │       │   ├── SiteList/
+│   │       │   └── SettingsPanel/
+│   │       ├── context/
+│   │       │   └── PopupContext.tsx
 │   │       ├── globals.css
-│   │       └── components/
-│   │           ├── Timer/       # Countdown display + controls
-│   │           ├── SiteList/    # Add / remove blocked domains
-│   │           ├── SettingsPanel/ # Work time, breaks, cycles, theme
-│   │           ├── Tabs/
-│   │           └── Icons/
+│   │       └── index.tsx
 │   ├── shared/
+│   │   ├── components/      # Header, Tab, Button, Icons
 │   │   ├── constants/       # Timer/storage/url constants + defaults
+│   │   ├── intl/            # i18n dictionaries + helpers
 │   │   ├── types/
 │   │   │   └── index.ts     # Shared TypeScript types
 │   │   └── utils/
-│   │       ├── index.ts
-│   │       └── time.ts      # Time helpers
+│   │       ├── chromeStorageState.ts # React state wrapper over chrome.storage
+│   │       ├── timerDisplay.ts       # Synchronized timer display hook/helpers
+│   │       └── index.ts
 │   ├── manifest.json        # Chrome extension manifest (MV3)
 │   └── main.ts              # Root exports barrel
+├── blocked.html             # Blocked page HTML entry point
 ├── index.html               # Popup HTML entry point
 ├── vite.config.ts
 ├── tsconfig.json
@@ -121,6 +133,13 @@ Vite will watch for file changes and rebuild automatically. After each rebuild, 
 5. Sites unblock automatically when a break begins
 6. Sites re-block when the next work session starts
 
+## State Model
+
+- Source of truth is `appState` in `chrome.storage.local`
+- Background service worker updates timer/settings/blocking and persists state
+- Popup and blocked page subscribe to storage changes through React context
+- Timer UI in popup and blocked page uses a shared synchronized display hook, so second changes happen in lockstep
+
 ## Permissions
 
 | Permission | Reason |
@@ -144,6 +163,8 @@ Vite will watch for file changes and rebuild automatically. After each rebuild, 
 
 | Command | Description |
 |---|---|
-| `npm run build` | Production build → `dist/` |
+| `npm run build` | Build with sourcemaps → `dist/` |
+| `npm run build:prod` | Production build without sourcemaps |
 | `npm run dev` | Watch mode — rebuilds on every file change |
 | `npm run preview` | Preview the built popup in a browser tab (UI only, no extension APIs) |
+| `npm run test` | Run unit tests with Vitest |
